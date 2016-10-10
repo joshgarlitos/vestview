@@ -1,4 +1,39 @@
+<!DOCTYPE html>
 <html>
-<h1>Testing</h1>
-<h2>Lalalala</h2>
+<head>
+	<title>
+		VestView
+	</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/temp.css">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}"> 
+</head>
+<body>
+
+	<div class="container">
+		<div class="row vcenter">
+	        <div class="col-md-6">
+	    		<h2>Stock Search</h2>
+	            <div id="custom-search-input">
+	                <div class="input-group col-md-12">
+	                    <input type="text" class="form-control input-lg" placeholder="Stock Symbol" />
+	                    <span class="input-group-btn">
+	                        <button class="btn btn-info btn-lg btn-custom" type="button">
+	                            <i class="glyphicon glyphicon-search"></i>
+	                        </button>
+	                    </span>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+	</div>
+
+	<script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
+    <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
+    <script src={{ url_for('static', filename='main.js') }}></script>
+</body>
 </html>
