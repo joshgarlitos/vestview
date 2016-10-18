@@ -1,13 +1,41 @@
+
+@font-face {
+  font-family: 'Pier Sans';
+  src: url('../fonts/PierSans/pier-regular.otf') format('opentype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Pier Sans';
+  src: url('../fonts/PierSans/pier-bold.otf') format('opentype');
+  font-weight: 600;
+}
+
+
+html, body {
+    font-family: 'Avenir', sans-serif;
+    font-size: 10px;
+}
+
 #custom-search-input{
-    padding: 3px;
-    border: solid 1px #E4E4E4;
+    font-family: 'Pier Sans';
+    font-weight: 600;
+    color: #464748;
+    padding: 1rem;
     border-radius: 6px;
     background-color: #fff;
+    -webkit-box-shadow: 0px 4px 10px 2px rgba(107,193,123,0.1);
+    -moz-box-shadow: 0px 4px 10px 2px rgba(107,193,123,0.1);
+    box-shadow: 0px 4px 10px 2px rgba(107,193,123,0.1);
 }
 
 #custom-search-input input{
     border: 0;
     box-shadow: none;
+    text-transform: uppercase;
+    color: #464748;
+    font-size: 5rem;
+    height: 6rem;
 }
 
 #custom-search-input button{
@@ -15,9 +43,9 @@
     background: none;
     box-shadow: none;
     border: 0;
-    color: #666666;
+    color: #464748;
+    opacity: 0.5;
     padding: 0 8px 0 10px;
-    border-left: solid 1px #ccc;
 }
 
 #custom-search-input button:hover{
