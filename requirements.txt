@@ -2,3 +2,5 @@ pymongo
 requests
 virtualenv
 flask
+pandas
+bokeh
