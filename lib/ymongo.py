@@ -92,6 +92,23 @@ class YMongo():
         start_dt = (datetime.datetime.today() - datetime.timedelta(days=30)).strftime("%Y-%m-%d")
         for stock in DJIA:
             self.add_stock(stock, start_dt, end_dt)
+    def list_stored_stocks(self):
+        """
+        Returns a list of all stocks stored in database
+        """
+        stored_stocks = []
+        FIELDS = {"symbol":True}
+        for stock in self.collection.find(projection=FIELDS):
+            stored_stocks.append(stock['symbol'])
+
+
+        return stored_stocks
+
+
+    def get_stock(self, symbol):
+        FIELDS = {"symbol":True, "daily_quotes":True, "_id":False}
+        json_quotes = self.collection.find_one({"symbol":symbol})['daily_quotes']
+        return json_quotes
 
     def __str__(self):
         return str(self.db_conn)
