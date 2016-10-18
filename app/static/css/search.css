@@ -78,6 +78,11 @@ html, body {
     font-weight: 500;
 }
 
+.logo { 
+    height: 40px;
+    margin-top: -20px;
+}
+
 #custom-search-input{
     font-family: 'Pier Sans';
     font-weight: 600;
