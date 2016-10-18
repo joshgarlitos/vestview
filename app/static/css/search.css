@@ -75,6 +75,7 @@ html, body {
 
 .titles h4 {
     color: #51a85f;
+    font-weight: 500;
 }
 
 #custom-search-input{

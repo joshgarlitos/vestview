@@ -8,7 +8,7 @@
 <!--
 <script src="../static/css/bootstrap.js"/> </script>
 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 <!--Bill's style sheets-->
 
@@ -53,7 +53,7 @@
 		    	</div>
 	            <div id="custom-search-input">
 	                <div class="input-group col-md-12">
-	                    <input type="text" class="form-control input-lg" placeholder="" />
+	                    <input id="ticker-search" type="text" class="form-control input-lg" placeholder="" />
 	                    <span class="input-group-btn">
 	                        <button class="btn btn-lg btn-custom" type="button">
 	                            <i class="glyphicon glyphicon-search"></i>
@@ -68,6 +68,7 @@
 
 	<script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
-    <script src={{ url_for('static', filename='main.js') }}></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src={{ url_for('static', filename='search.js') }}></script>
 </body>
 </html>
