@@ -5,3 +5,4 @@ flask
 cython
 pandas
 bokeh
+uwsgi
