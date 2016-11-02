@@ -6,16 +6,32 @@
 
 }
 
+.flex-container {
+	display: flex;
+	align-items: baseline;
+}
 
 #symbol {
 	font-family: 'Pier Sans';
     font-weight: 600;
-    font-size: 5rem;
+    font-size: 6rem;
     color: #464748;
     text-transform: uppercase;
 }
 
 #company {
-	font-size: 2rem;
-	float: left;
+	font-size: 1.7rem;
+	font-weight: 500;
+	margin-left: 1.5rem;
 }
+
+#price {
+	font-family: 'Pier Sans';
+    font-weight: 400;
+    font-size: 4rem;
+}
+
+#currency {
+	align-self: flex-start;
+}
+
