@@ -175,15 +175,26 @@ $(document).ready(function() {
 			var index = items.indexOf(ui.item.label) + 1;
 			var el = $("#ui-id-1 li:nth-child("+index+")");
 
+			// remove class from all items 
 			items.forEach(function(item){
-				console.log(item);
 				var ind = items.indexOf(item) + 1;
 				var removeFocusEl = $("#ui-id-1 li:nth-child("+ind+")");
 				removeFocusEl.removeClass('item-focus');
-				console.log(removeFocusEl);
+				$(removeFocusEl).off('click');
 			});
 
+			// add back class to the one that's currently focused
 			el.addClass('item-focus');
+
+			$(el).on('click', function(e){
+				console.log('clicked!');
+				$("#ticker-search").val(ui.item.value)
+
+				// show buttons & hide input bar here 
+				
+				return true;
+
+			});
 
 		},
 		autoFocus: true,
