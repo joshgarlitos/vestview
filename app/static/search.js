@@ -1,11 +1,7 @@
 
+// window.location.href = '/stock/' + ticker;
+
 $(document).ready(function() {
-	$("#ticker-search").on('keyup', function (e) {
-	    if (e.keyCode == 13) {
-	    	var ticker = $('#ticker-search').val().toUpperCase();
-	        window.location.href = '/stock/' + ticker;
-	    }
-	});
 
 	var availableTutorials = [
 	{
@@ -166,22 +162,33 @@ $(document).ready(function() {
 			$("#ticker-search").val(ui.item.value)
 
 			// show buttons & hide input bar here 
-			
-			$("#ticker-search").hide();
 
 			console.log("Hannah")
-			return false;
+			return true;
 
 		},
 		focus: function(event, ui) {
-			console.log(event);
-			console.log(ui);
-			console.log('here!');
+
+			var ul = $('#ui-id-1');
+			var items = [];
+			$("#ui-id-1 li").each(function() { items.push($(this).find('.ticker-content').text()) });
+			var index = items.indexOf(ui.item.label) + 1;
+			var el = $("#ui-id-1 li:nth-child("+index+")");
+
+			items.forEach(function(item){
+				console.log(item);
+				var ind = items.indexOf(item) + 1;
+				var removeFocusEl = $("#ui-id-1 li:nth-child("+ind+")");
+				removeFocusEl.removeClass('item-focus');
+				console.log(removeFocusEl);
+			});
+
+			el.addClass('item-focus');
 
 		},
 		autoFocus: true,
 
-	minLength:0,
+	minLength:1,
 
 	}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 		return $( "<li class='ui-menu-item'></li>" )

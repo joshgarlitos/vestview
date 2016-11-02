@@ -31,6 +31,20 @@
     font-weight: 500;
 }
 
+.item-focus {
+    background-color: rgba(70, 71, 72, 0.15);
+    cursor: pointer;
+}
+
+#ui-id-1 {
+    background: none;
+    border: none;
+}
+
+#ui-id-1 .ui-menu-item {
+    border-bottom: 1px solid black;
+}
+
 
 
 .ticker-content {
