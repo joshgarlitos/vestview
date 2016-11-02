@@ -1,51 +1,4 @@
 
-@font-face {
-  font-family: 'Pier Sans';
-  src: url('../fonts/PierSans/pier-regular.otf') format('opentype');
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'Pier Sans';
-  src: url('../fonts/PierSans/pier-bold.otf') format('opentype');
-  font-weight: 600;
-}
-
-
-html, body {
-    font-family: 'Avenir', sans-serif;
-    font-size: 10px;
-    background-color: #f5f6f6;
-    height: 100%;
-}
-
-.navbar {
-    color: #fff;
-    background: none;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    color: #fff;
-    font-size: 1.5rem;
-    font-family: 'Avenir', sans-serif;
-    padding: 35px;
-}
-
-.navbar-default .navbar-nav>li>a {
-    color: #fff;
-    text-shadow: none;
-    line-height: 0.5;
-}
-
-.navbar .white-button {
-    background-color: #fff;
-    color: #6ac17b !important;
-    border-radius: 5px;
-}
-
-.navbar-default .navbar-nav .white-button>li>a {
-    color: #6ac17b;
-}
 
 .info-text {
     margin-top: 10rem;
@@ -78,10 +31,7 @@ html, body {
     font-weight: 500;
 }
 
-.logo { 
-    height: 40px;
-    margin-top: -20px;
-}
+
 
 #custom-search-input{
     font-family: 'Pier Sans';

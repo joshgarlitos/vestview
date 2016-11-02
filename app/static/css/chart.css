@@ -1,0 +1,21 @@
+.nav-content {
+    height: 10%;
+}
+
+.top-content {
+
+}
+
+
+#symbol {
+	font-family: 'Pier Sans';
+    font-weight: 600;
+    font-size: 5rem;
+    color: #464748;
+    text-transform: uppercase;
+}
+
+#company {
+	font-size: 2rem;
+	float: left;
+}

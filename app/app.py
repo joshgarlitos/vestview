@@ -20,6 +20,12 @@ def root():
   This will serve the homepage template
   """
   return render_template("index.html")
+
+
+@app.route('/chart/<symbol>')
+def chart(symbol):
+  company = "Apple Inc."
+  return render_template("chart.html", symbol=symbol, company=company)
   
 
 @app.route("/stock/<symbol>")

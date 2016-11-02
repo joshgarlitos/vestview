@@ -16,13 +16,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}"> 
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chart.css') }}"> 
 
 </head>
 
 <body>
 
-	<div class="top-content">
+	<div class="nav-content">
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,30 +46,52 @@
 		</nav>
 	</div>
 
-	<div class="main-content container">
+	<div class="container">
 		<div class="row center">
-	        	<div class="titles">
-		    		<h1>Stock Search</h2>
-		    		<h4>Oct. 18th 2:34PM</h3>
-		    	</div>
-	            <div id="custom-search-input">
-	                <div class="input-group col-md-12">
-	                    <input id="ticker-search" type="text" class="form-control input-lg" placeholder="" />
-	                    <span class="input-group-btn">
-	                        <button class="btn btn-lg btn-custom" type="button">
-	                            <i class="glyphicon glyphicon-search"></i>
-	                        </button>
-	                    </span>
-	                </div>
-	            </div>
-	            <h3 class="info-text"> Start typing to search for stocks </h3>
+			<div class="col-md-12">
+				<div class="top-content">
+					<div class="row">
+						<div class="col-md-4">
+								<div id="symbol">{{symbol}}</div>
+								<div id="company">{{company}}</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-2" id="price">143.25</div>
+								<div class="col-md-1" id="currency">USD</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div id="shown-date">May 13th, 2016 3:15pm</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div id="chart-container"></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-1">
+							<div class="play-button" id="play-pause"></div>
+						</div>
+						<div class="col-md-11">
+							<div id="timeline"></div>
+						</div>
+					</div>
+
+
+
+
+				</div>
+			</div>
 		</div>
-	</div>
+	</div>	
+
 
     <script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src={{ url_for('static', filename='search.js') }}></script>
+    <script src={{ url_for('static', filename='chart.js') }}></script>
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
