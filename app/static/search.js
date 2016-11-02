@@ -163,17 +163,29 @@ $(document).ready(function() {
 		source: availableTutorials,
 
 		select: function(event, ui){
-		$("#ticker-search").val(ui.item.value)
-		console.log("Hannah")
-		return false;
+			$("#ticker-search").val(ui.item.value)
+
+			// show buttons & hide input bar here 
+			
+			$("#ticker-search").hide();
+
+			console.log("Hannah")
+			return false;
 
 		},
+		focus: function(event, ui) {
+			console.log(event);
+			console.log(ui);
+			console.log('here!');
 
-	minLength:1
+		},
+		autoFocus: true,
+
+	minLength:0,
 
 	}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-		return $( "<li class ='dropdown'></li>" )
-		.data("ui-autocomplete-item", item)
+		return $( "<li class='ui-menu-item'></li>" )
+		.data('ui-autocomplete-item', item)
 		.append( "<div class='row'>" + "<div class='col-md-4'>" + "<div class='ticker-content'>" + item.value + "</div>" + "</div>" + "<div class='col-md-4'>" + "<div class='compName-content'>" + item.name + "</div>" + "</div>" + "<div class='col-md-4'>" + "<div class='price'>" + item.price + "</div>" + "</div>" + "</div>")
 		.appendTo( ul );
     };
