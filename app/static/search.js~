@@ -39,7 +39,7 @@ $(document).ready(function() {
                "WMT",
                "DIS"
             ];
-            $("#ticker-search").autocomplete({
+            $("#automplete").autocomplete({
                source: availableTutorials
             });
 

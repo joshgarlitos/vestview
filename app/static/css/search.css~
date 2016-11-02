@@ -56,7 +56,7 @@ html, body {
 
 .main-content {
     position: relative;
-    top: -15%;
+    top: -30%;
 }
 
 .top-content {
