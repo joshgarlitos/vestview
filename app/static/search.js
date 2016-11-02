@@ -162,8 +162,8 @@ $(document).ready(function() {
 			$("#ticker-search").val(ui.item.value)
 
 			// show buttons & hide input bar here 
-
-			console.log("Hannah")
+			$(".catchup").css("display", "block");
+			$(".info-text").css("display", "none");
 			return true;
 
 		},
@@ -189,6 +189,7 @@ $(document).ready(function() {
 			$(el).on('click', function(e){
 				console.log('clicked!');
 				$("#ticker-search").val(ui.item.value)
+				$(".info-text").css("display", "none");
 
 				// show buttons & hide input bar here 
 				

@@ -46,25 +46,33 @@
 		</nav>
 	</div>
 
-	<div class="main-content container">
-		<div class="row center">
-	        	<div class="titles">
-		    		<h1>Stock Search</h2>
-		    		<h4>Oct. 18th 2:34PM</h3>
-		    	</div>
-	            <div id="custom-search-input">
-	                <div class="input-group col-md-12">
-	                    <input id="ticker-search" type="text" class="form-control input-lg" placeholder="" />
-	                    <span class="input-group-btn">
-	                        <button class="btn btn-lg btn-custom" type="button">
-	                            <i class="glyphicon glyphicon-search"></i>
-	                        </button>
-	                    </span>
-	                </div>
-	            </div>
-	            <h3 class="info-text"> Start typing to search for stocks </h3>
+<div class="main-content container">
+	<div class="row center">
+    	<div class="titles">
+    		<h1>Stock Search</h1>
+    		<h4>Oct. 18th 2:34PM</h3>
+    	</div>
+        <div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input id="ticker-search" type="text" class="form-control input-lg" placeholder="" />
+                <span class="input-group-btn">
+                    <button class="btn btn-lg btn-custom" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <h3 class="info-text"> Start typing to search for stocks </h3>
+		<div class='catchup col-md-8'>
+			<div class='catchup-title'>Catch up on this month</div>
+			<div class='catchup-text'>We'll run through the ups and downs of the market, showcasking what the internet is talking about each day of the week. </div>
+		</div>
+		<div class='catchup col-md-8'>
+			<div class='catchup-title'>Just show today</div>
+			<div class='catchup-text'>No worries, everyone's in a rush these days. We'll show you today's stocks alongside the top tweets and news stories of today. </div>
 		</div>
 	</div>
+</div>
 
     <script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>

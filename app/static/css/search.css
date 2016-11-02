@@ -9,7 +9,7 @@
 
 .main-content {
     position: relative;
-    top: -15%;
+    top: -20%;
 }
 
 .top-content {
@@ -46,13 +46,13 @@
 }
 
 
-
 .ticker-content {
     font-family: 'Pier Sans';
     font-weight: 600;
     color: #464748;
 	text-align: left;
     font-size: 5rem;
+	padding: 30px;
 }
 
 .compName-content {
@@ -69,6 +69,7 @@
     color: #464748;
 	text-align: right;
     font-size: 3rem;
+	padding: 30px;
 }
 
 .dropdown {
@@ -80,6 +81,33 @@
 
 .dropdown:hover {
 	opacity: 5%;
+}
+
+
+.catchup {
+	display: none;
+	border: 0.5em solid #ccc;
+	margin-top: 30px;
+}
+
+.catchup-title {
+	font-family: 'Pier Sans';
+	font-weight: 900;
+	color: #464748;
+	text-align: left;
+	font-size: 4rem;
+	margin-top: 20px;
+	margin-left: 20px;	
+}
+
+.catchup-text {
+	font-family: 'Pier Sans';
+    font-weight: 100;
+    color: #464748;
+    text-align: left;
+    font-size: 1.5rem;
+	margin-left: 20px;
+	margin-bottom: 20px;
 }
 
 #custom-search-input{
@@ -96,12 +124,12 @@
 
 #custom-search-input input{
     border: 0;
-    box-shadow: none;
-    text-transform: uppercase;
-    color: #464748;
-    font-size: 5rem;
-    height: 6rem;
-    padding-top: 2rem;
+	box-shadow: none;
+	text-transform: uppercase;
+	color: #464748;
+	font-size: 4rem;
+	height: 8rem;
+	padding-top: 1rem;
 }
 
 #custom-search-input button{
@@ -126,4 +154,8 @@
 
 .btn-custom {
     background-color: transparent;
+}
+
+.ui-menu .ui-menu-item {
+    margin-top: 10px;
 }
