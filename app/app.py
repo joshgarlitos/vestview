@@ -1,11 +1,4 @@
 from flask import Flask, render_template, jsonify
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.resources import INLINE
-from bokeh.util.string import encode_utf8
-from collections import OrderedDict
-import pandas as pd
-from pandas.io.json import json_normalize
 import sys
 import flask
 sys.path.append('../lib')
@@ -14,47 +7,58 @@ from ymongo import *
 
 app = Flask(__name__)
 
+DJIA = ["MMM", "AXP", "AAPL", "BA", "CAT", "CVX", "CSCO", "KO", "DIS",
+        "DD", "XOM", "GE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM",
+        "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UTX", "UNH",
+        "VZ", "V", "WMT"]
+
+"""
+This will serve the homepage template
+"""
 @app.route('/')
 def root():
-  """
-  This will serve the homepage template
-  """
+
   return render_template("index.html")
 
-
+"""
+This is the interactive chart page for a specific stock
+"""
 @app.route('/chart/<symbol>')
 def chart(symbol):
-  company = "Apple Inc."
-  return render_template("chart.html", symbol=symbol, company=company)
-  
+  return render_template("chart.html", symbol=symbol)
 
-@app.route("/stock/<symbol>")
+"""
+This is matt's page, index.html search directs to /chart/<symbol>, but if you
+want to test this page just go directly to /graph/<symbol>
+"""
+
+@app.route('/graph/<symbol>')
 def graph(symbol):
-  """
-  This function essentialy serves the page for http://vestview.com/stock/<SYMBOL>
+  company = "Apple Inc."
+  return render_template("graph.html", symbol=symbol, company=company)
 
-  TODO: Add multiple stock functionality, make graph more interactive, and update
-  graph.html template
-  """
+"""
+This page returns historical data for a specific stock
+* this page is simply used for data
+"""
+@app.route("/data/<symbol>")
+def data(symbol):
   ym = YMongo("vestview", "stocks")
-  #returns JSON obj
   stock_data = ym.get_stock(symbol)
-  #now normalize the JSON obj to put into pandas dataframe
-  df = json_normalize(stock_data)
-  #now convert the "data" column to datetime and set it as the index
-  df['date'] = pd.to_datetime(df['date'])
+  return json.dumps(stock_data)
 
-  fig = figure(x_axis_type="datetime")
-  fig.title = "Stock Closing Prices"
-  fig.grid.grid_line_alpha=0.3
-  fig.xaxis.axis_label = 'Date'
-  fig.yaxis.axis_label = 'Price'
-  fig.line(df['date'], df['values.close'], color='#A6CEE3', legend=symbol)
-  
+"""
+This page returns current data for ALL DJIA stocks
+* this page is simply used for data
+"""
+@app.route("/djia")
+def all_djia_stocks():
+  yf = YFinance()
+  # returns array of JSON objs with all DJIA stock prices
+  stock_data = yf.get_quote(DJIA)
+  return json.dumps(stock_data)
 
-  script, div = components(fig)
 
-  return render_template("graph.html", div=div, script=script)
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=5000)
+  app.run(host='0.0.0.0', port=5000, debug=True)
