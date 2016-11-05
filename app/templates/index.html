@@ -2,21 +2,17 @@
 <html lang="en">
 <html>
 <head>
-<title>Vestview</title>
+    <title>Vestview</title>
 
 <!--For autofill-->
-<meta charset="utf-8">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"></link>
-<!--End for autofill-->
+    <meta charset="utf-8">
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}"> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <!-- Optional theme -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}">
 
 </head>
 
@@ -34,7 +30,7 @@
 		        <span class="icon-bar"></span>
 		      </button>
 		      <a class="navbar-brand" href="#">
-		      	<img class='logo' src={{ url_for('static', filename='vestview-logo.png') }}/>
+		      	<img class='logo' src={{ url_for('static', filename='imgs/vestview-logo.png') }}/>
 		      </a>
 		    </div>
 		      <ul class="nav navbar-nav navbar-right">
@@ -46,41 +42,37 @@
 		</nav>
 	</div>
 
-<div class="main-content container">
-	<div class="row center">
-    	<div class="titles">
-    		<h1>Stock Search</h1>
-    		<h4>Oct. 18th 2:34PM</h3>
-    	</div>
-        <div id="custom-search-input">
-            <div class="input-group col-md-12">
-                <input id="ticker-search" type="text" class="form-control input-lg" placeholder="" />
-                <span class="input-group-btn">
-                    <button class="btn btn-lg btn-custom" type="button">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </span>
+    <div class="main-content container">
+    	<div class="row center">
+        	<div class="text-center titles">
+        		<h1>Stock Search</h1>
+        		<h4 id="timestamp"></h3>
+        	</div>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input id="ticker-search" type="text" class="form-control input-lg" placeholder="" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-lg btn-custom" id="search-btn" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
-        </div>
-        <h3 class="info-text"> Start typing to search for stocks </h3>
-		<div class='catchup col-md-8'>
-			<div class='catchup-title'>Catch up on this month</div>
-			<div class='catchup-text'>We'll run through the ups and downs of the market, showcasking what the internet is talking about each day of the week. </div>
-		</div>
-		<div class='catchup col-md-8'>
-			<div class='catchup-title'>Just show today</div>
-			<div class='catchup-text'>No worries, everyone's in a rush these days. We'll show you today's stocks alongside the top tweets and news stories of today. </div>
-		</div>
-	</div>
-</div>
+    		<div class='catchup col-md-8'>
+    			<div class='catchup-title'>Catch up on this month</div>
+    			<div class='catchup-text'>We'll run through the ups and downs of the market, showcasking what the internet is talking about each day of the week. </div>
+    		</div>
+    		<div class='catchup col-md-8'>
+    			<div class='catchup-title'>Just show today</div>
+    			<div class='catchup-text'>No worries, everyone's in a rush these days. We'll show you today's stocks alongside the top tweets and news stories of today. </div>
+    		</div>
+    	</div>
+    </div>
 
     <script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src={{ url_for('static', filename='search.js') }}></script>
-
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src={{ url_for('static', filename='./bower_components/jquery-ui/jquery-ui.js') }}></script>
+    <script src={{ url_for('static', filename='js/search.js') }}></script>
 
 
 </body>
