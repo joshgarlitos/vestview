@@ -11,6 +11,11 @@
 	align-items: baseline;
 }
 
+.flex-container-bottom {
+	display: flex;
+	align-items: flex-end;
+}
+
 #symbol {
 	font-family: 'Pier Sans';
     font-weight: 600;
@@ -34,4 +39,42 @@
 #currency {
 	align-self: flex-start;
 }
+
+#ctReqs {
+	opacity: 0;
+	transition: all 320ms ease-out;
+	-webkit-transition: all 320ms ease-out;
+	-moz-transition: all 320ms ease-out;
+	-webkit-transform: translate(-15px);
+	-moz-transform: translate(-15px);
+	height: 160px;
+}
+
+#ctReqs line {
+	stroke: rgba(255, 255, 255, 0.2);
+}
+
+#ctReqs path {
+	stroke: #f93;
+	stroke-width: 2px;
+}
+
+#ctReqs .ct-label {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+#ctReqs .ct-point {
+	stroke: #f93;
+	margin: 20px;
+}
+
+#ctReqs .ct-point:hover {
+	stroke-width: 22px;
+	transition: all 100ms ease-in-out;
+	-webkit-transition: all 100ms ease-in-out;
+	-moz-transition: all 100ms ease-in-out;
+}
+
+
+
 

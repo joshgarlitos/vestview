@@ -17,6 +17,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chart.css') }}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.css') }}">
 
 </head>
 
@@ -51,16 +52,14 @@
 		<div class="row center">
 			<div class="col-md-12">
 				<div class="top-content">
-					<div class="row flex-container">
+					<div class="row flex-container-bottom">
 						<div class="col-md-4 flex-container">
-								<div id="symbol">{{symbol}}</div>
-								<div id="company">{{company}}</div>
+							<div id="symbol">{{symbol}}</div>
+							<div id="company">{{company}}</div>
 						</div>
 						<div class="col-md-4 flex-container">
-							<div class="row">
-								<div class="col-md-2" id="price">143.25</div>
-								<div class="col-md-1" id="currency">USD</div>
-							</div>
+							<div id="price">143.25</div>
+							<div id="currency">USD</div>
 						</div>
 						<div class="col-md-4">
 							<div id="shown-date">May 13th, 2016 3:15pm</div>
@@ -91,7 +90,11 @@
 
     <script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
+    <script src={{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.js') }}></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    	var hello = '{{company}}';
+    </script>
     <script src={{ url_for('static', filename='chart.js') }}></script>
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
