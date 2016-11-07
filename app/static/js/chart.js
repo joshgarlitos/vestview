@@ -36,9 +36,9 @@ var companies = {
 }
 
 $(function () {
-    $.getJSON('/data/' + symbol, function (data) {
-        // Create the chart
 
+        // Create the chart
+        console.log(data);
         var stockPairs = [];
         // the JSON data object is returned with most recent date first
         // so loop through backwards for correct timeseries x axis
@@ -67,5 +67,4 @@ $(function () {
             }],
 
         });
-    });
 });

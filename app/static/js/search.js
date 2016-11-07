@@ -18,14 +18,12 @@ $(document).ready(function() {
 	   each obj in this array corresponds to a stock's CURRENT info
 	   however, a lot of this info isnt necessary (for autocomplete) ,
 	   so we filter it down*/
-	$.getJSON("/djia", function(data){
-		$.each(data, function(){
-			autocompleteData.push(
-					{value: this.symbol,
-					name: companies[this.symbol],
-					price: this.LastTradePriceOnly
-					});
-		});
+	$.each(data, function(){
+		autocompleteData.push(
+				{value: this.symbol,
+				name: companies[this.symbol],
+				price: this.LastTradePriceOnly
+				});
 	});
 
 	$("#ticker-search").autocomplete({
