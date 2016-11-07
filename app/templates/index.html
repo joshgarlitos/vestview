@@ -77,7 +77,10 @@
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/jquery-ui/jquery-ui.js') }}></script>
     <script src={{ url_for('static', filename='js/search.js') }}></script>
-
+    <!-- Get dynamic data from flask application -->
+    <script type="text/javascript">
+        var data = {{autocompleteData | tojson}};
+    </script>
 
 </body>
 </html>
