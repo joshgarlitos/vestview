@@ -12,7 +12,6 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chart.css') }}"> 
 	<link rel="stylesheet" href="{{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.css') }}">
 
      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -57,7 +56,7 @@
 			<div class="col-md-12">
 				<div class="top-content">
 					<div class="row flex-container-bottom">
-						<div class="col-md-4 flex-container">
+						<div class="col-md-4 flex-container top-left">
 							<div id="symbol">{{symbol}}</div>
 							<div id="company">{{company}}</div>
 						</div>

@@ -110,13 +110,16 @@ function renderStockChart(stock){
         axisY: {
             labelInterpolationFnc: function(value) {
                 return '$' + value;
-            }
+            },
+            onlyInteger: true,
+            scaleMinSpace: 20
         },
         axisX: {
             // We can disable the grid for this axis
             showGrid: false,
             // and also don't show the label
-            showLabel: false
+            showLabel: false,
+            offset: 0
         },
         fullWidth: true,
         height: 300,
@@ -125,6 +128,7 @@ function renderStockChart(stock){
             right: 0,
             left: 0
         }
+        
     }
     // init a line chart 
     var chart = new Chartist.Line('#ct-stocks', data, options);
@@ -136,6 +140,16 @@ function renderStockChart(stock){
     chart.on('created', function() {
         seq = 0;
 
+        setTimeout(function(){
+            $('#ct-stocks .ct-label').addClass('show-label');
+            $('#ct-stocks line').css('opacity', '1');
+
+            setTimeout(function(){
+                animateStockChart();
+                $('#ct-stocks path').css('opacity', '1');
+            }, 100);
+        }, 200);
+
         /*
         // create tooltips for each point
         $('#ct-stocks .ct-point').each(function(i, pnt){
@@ -145,8 +159,6 @@ function renderStockChart(stock){
 
             $(pnt).attr('ct:day', day);
         }); */
-
-        animateStockChart();
 
         /*
         // add tooltips
@@ -203,7 +215,7 @@ function animateStockChart(){
     var path = $('#ct-stocks path').get(0);
     var pathLen = path.getTotalLength();
 
-    let duration = 5500;
+    let duration = 10000;
     let durationDiff = duration * (1 - lastTweenValue);
     // could try easing: 'easeInOut'
 

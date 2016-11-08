@@ -6,8 +6,13 @@
 
 }
 
+/* Some overrides from previous styles */
 .container {
 	width: 1300px;
+}
+
+.navbar {
+	padding: 25px;
 }
 
 .flex-container {
@@ -20,6 +25,10 @@
 .flex-container-bottom {
 	display: flex;
 	align-items: flex-end;
+}
+
+.top-left {
+	padding-left: 55px;
 }
 
 .top-middle {
@@ -98,15 +107,40 @@
 	stroke: #F5F6F6;
 	stroke-width: 4px;
 	stroke-dasharray: 0;
+
+	transition: opacity 200ms ease-out;
+	opacity: 0;
 }
 
 #ct-stocks path {
 	stroke: #51A85F;
 	stroke-width: 4px;
+
+	transition: opacity 200ms ease-out;
+	opacity: 0;
 }
 
-#ctReqs .ct-label {
-	color: rgba(255, 255, 255, 0.5);
+#ct-stocks path.show-path {
+	opacity: 1;
+}
+
+#ct-stocks .ct-labels {
+	margin-right: -2px;
+}
+
+#ct-stocks .ct-label {
+	color: #51A85F;
+	font-weight: 600;
+	font-size: 1.4rem;
+
+	transition: all 200ms ease-out;
+	opacity: 0;
+	transform: translate(-30px);
+}
+
+#ct-stocks .ct-label.show-label {
+	opacity: 1;
+	transform: translate(0px);
 }
 
 #ctReqs .ct-point {
@@ -130,6 +164,12 @@
 .chart-bg { 
 	position: relative;
 	background-color: #E0EDE2;
+	margin-left: 40px;
+}
+
+.chart-container {
+	height: 300px;
+	margin-left: -40px;
 }
 
 .control-button {
