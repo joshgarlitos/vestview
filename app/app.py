@@ -41,7 +41,7 @@ def graph(symbol):
   #returns JSON obj
   stock_data = ym.get_stock(symbol)
 
-  return render_template("chart.html", data=stock_data)
+  return render_template("chart.html", data=stock_data, symbol=symbol)
 
 
 

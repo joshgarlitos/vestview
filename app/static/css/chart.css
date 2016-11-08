@@ -6,14 +6,36 @@
 
 }
 
+.container {
+	width: 1300px;
+}
+
 .flex-container {
 	display: flex;
 	align-items: baseline;
+	padding: 0;
+	padding-left: 2px;
 }
 
 .flex-container-bottom {
 	display: flex;
 	align-items: flex-end;
+}
+
+.top-middle {
+	margin-bottom: 8px;
+	padding-left: 4rem;
+}
+
+.top-right {
+	margin-bottom: 2rem;
+	text-align: right;
+	padding: 0;
+}
+
+#shown-date {
+	font-size: 1.7rem;
+	font-weight: 600;
 }
 
 #symbol {
@@ -34,10 +56,32 @@
 	font-family: 'Pier Sans';
     font-weight: 400;
     font-size: 4rem;
+    margin-left: 2px;
+}
+
+.status {
+	background-color: #464748;
+	height: 2rem;
+	width: 2rem;
+	border-radius: 0.2rem;
+	align-self: flex-start;
+	margin-top: 1.4rem;
+	margin-right: 1rem;
+
+}
+
+.up {
+	background-color: #51A85F;
+}
+
+.down {
+	background-color: #E75656;
 }
 
 #currency {
 	align-self: flex-start;
+	font-weight: 600;
+	margin-top: 6px;
 }
 
 #ctReqs {
@@ -50,13 +94,15 @@
 	height: 160px;
 }
 
-#ctReqs line {
-	stroke: rgba(255, 255, 255, 0.2);
+#ct-stocks line {
+	stroke: #F5F6F6;
+	stroke-width: 4px;
+	stroke-dasharray: 0;
 }
 
-#ctReqs path {
-	stroke: #f93;
-	stroke-width: 2px;
+#ct-stocks path {
+	stroke: #51A85F;
+	stroke-width: 4px;
 }
 
 #ctReqs .ct-label {
@@ -68,6 +114,7 @@
 	margin: 20px;
 }
 
+
 #ctReqs .ct-point:hover {
 	stroke-width: 22px;
 	transition: all 100ms ease-in-out;
@@ -76,5 +123,26 @@
 }
 
 
+.item-height {
+	height: 80px;
+}
+
+.chart-bg { 
+	position: relative;
+	background-color: #E0EDE2;
+}
+
+.control-button {
+	height: 4.5rem;
+	width: 4.5rem;
+	border-radius: 4px;
+	background-color: #fff;
+	transition: all 200ms ease-out;
+	box-shadow: 0px 3px 10px 0px rgba(72, 71, 73, 0.2);
+	cursor: pointer;
+}
 
 
+.timeline-row {
+	margin-top: 5rem;
+}
