@@ -86,6 +86,7 @@
 
 .catchup {
 	display: none;
+	width: 975px;
 }
 
 .catchup-button {
