@@ -35,6 +35,10 @@ $(document).ready(function() {
 			// show buttons & hide input bar here
 			$(".catchup").css("display", "block");
 			$(".info-text").css("display", "none");
+
+			//change the size of the input bar
+			$("#custom-search-input").addClass("col-md-10");
+			$("#custom-search-input").addClass("col-md-offset-2");
 			return true;
 
 		},
@@ -80,17 +84,23 @@ $(document).ready(function() {
 		.appendTo( ul );
     };
 
-    $("#ticker-search").on('keyup', function (e) {
+    /*$("#ticker-search").on('keyup', function (e) {
 	    if (e.keyCode == 13) {
 	    	var ticker = $('#ticker-search').val().toUpperCase();
-	        window.location.href = '/chart/' + ticker;
+	        //window.location.href = '/chart/' + ticker;
 	    }
-	});
+	});*/
     /* listens for click on search button, someone refactor this*/
 	$("#search-btn").on("click", function(e){
 		var ticker = $('#ticker-search').val().toUpperCase();
 	    window.location.href = '/chart/' + ticker;
 	});
+
+	$(".catchup-button").on("click", function(e){
+		var ticker = $('#ticker-search').val().toUpperCase();
+	    window.location.href = '/chart/' + ticker;
+	});
+
 });
 
 
