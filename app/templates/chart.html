@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
 <html>
 <head>
+
 <title>Vestview</title>
 
-<!--For autofill-->
-<meta charset="utf-8">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"></link>
-<!--End for autofill-->
+	<!--For autofill-->
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"></link>
+	<!--End for autofill-->
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chart.css') }}"> 
+	<link rel="stylesheet" href="{{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.css') }}">
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chart.css') }}"> 
-<link rel="stylesheet" href="{{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
 
+    <!-- This is the CSS file for the chart *ONLY*
+         All relevant fields have a comment preceded with "!!"
+    -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/highcharts.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chart.css') }}">
 </head>
 
 <body>
-
 	<div class="nav-content">
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
@@ -48,6 +51,7 @@
 		</nav>
 	</div>
 
+	
 	<div class="container">
 		<div class="row center">
 			<div class="col-md-12">
@@ -57,50 +61,66 @@
 							<div id="symbol">{{symbol}}</div>
 							<div id="company">{{company}}</div>
 						</div>
-						<div class="col-md-4 flex-container">
-							<div id="price">143.25</div>
-							<div id="currency">USD</div>
+						<div class="col-md-4 col-md-offset-1 flex-container top-middle">
+							<div class='status'></div>
+							<div id="price">___.__</div>
+							<!-- <div id="currency">USD</div> -->
+
 						</div>
-						<div class="col-md-4">
-							<div id="shown-date">May 13th, 2016 3:15pm</div>
+						<div class="col-md-3 top-right">
+							<div id="shown-date">May 13th, 2016</div>
 						</div>
 					</div>
 					
-					<div class="row">
-						<div id="chart-container"></div>
+					<div class="row chart-bg">
+						<div class="chart-container">
+							<div id='ct-stocks'></div>
+						</div>
 					</div>
 					
-					<div class="row">
+					<div class="row timeline-row">
 						<div class="col-md-1">
-							<div class="play-button" id="play-pause"></div>
+							<div id='play-pause' class='control-button'></div>
 						</div>
 						<div class="col-md-11">
 							<div id="timeline"></div>
+
 						</div>
 					</div>
-
-
-
 
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 
+
+    <!-- highstock chart <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="stockchart"></div>
+            </div>
+        </div>
+    </div> -->
 
     <script src={{ url_for('static', filename='./bower_components/jquery/dist/jquery.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
     <script src={{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.js') }}></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script>
-    	var hello = '{{company}}';
-    </script>
-    <script src={{ url_for('static', filename='chart.js') }}></script>
-
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src={{ url_for('static', filename='./bower_components/moment/moment.js') }}></script>
+    <script src={{ url_for('static', filename='./bower_components/velocity/velocity.min.js') }}></script>
 
+    <!-- <script src={{ url_for('static', filename='./bower_components/highcharts/js/highstock.js') }}></script> -->
+    <script src={{ url_for('static', filename='js/chart.js') }}></script>
 
+    <script type="text/javascript">
+      var symbol = '{{symbol}}';
+      var data = {{data | tojson}};
+    </script>
+    <!--
+    <script src={{ url_for('static', filename='./bower_components/d3/d3.min.js') }}></script>
+    <script src={{ url_for('static', filename='./bower_components/crossfilter/crossfilter.min.js') }}></script>
+    <script src={{ url_for('static', filename='./bower_components/dcjs/dc.min.js') }}></script>
+    -->
 </body>
 </html>
-

@@ -19,6 +19,10 @@ html, body {
     height: 100%;
 }
 
+.h1, h1 {
+	font-size: 48px;
+}
+
 .navbar {
     color: #fff;
     background: none;
@@ -38,8 +42,7 @@ html, body {
 }
 
 .navbar .white-button {
-    background-color: #fff;
-    color: #6ac17b !important;
+    border: #fff;
     border-radius: 5px;
 }
 

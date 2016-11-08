@@ -1,16 +1,13 @@
 from flask import Flask, render_template, jsonify
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.resources import INLINE
-from bokeh.util.string import encode_utf8
-from collections import OrderedDict
-import pandas as pd
-from pandas.io.json import json_normalize
 import sys
-import flask
 sys.path.append('../lib')
 from yfinance import *
 from ymongo import *
+
+MONGODB_HOST = "localHost"
+DBS_NAME = "vestview"
+COLLECTION_NAME = "stocks"
+
 
 app = Flask(__name__)
 
@@ -18,17 +15,20 @@ app = Flask(__name__)
 def root():
   """
   This will serve the homepage template
+  The data JSON obj is sent to the client side for real-time
+  autocomplete data
   """
-  return render_template("index.html")
+  DJIA = ["MMM", "AXP", "AAPL", "BA", "CAT", "CVX", "CSCO", "KO", "DIS",
+        "DD", "XOM", "GE", "GS", "HD", "IBM", "INTC", "JNJ", "JPM",
+        "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UTX", "UNH",
+        "VZ", "V", "WMT"]
+  yf = YFinance()
 
+  data = yf.get_quote(DJIA)
 
-@app.route('/chart/<symbol>')
-def chart(symbol):
-  company = "Apple Inc."
-  return render_template("chart.html", symbol=symbol, company=company)
-  
+  return render_template("index.html", autocompleteData=data)
 
-@app.route("/stock/<symbol>")
+@app.route("/chart/<symbol>")
 def graph(symbol):
   """
   This function essentialy serves the page for http://vestview.com/stock/<SYMBOL>
@@ -36,25 +36,19 @@ def graph(symbol):
   TODO: Add multiple stock functionality, make graph more interactive, and update
   graph.html template
   """
-  ym = YMongo("vestview", "stocks")
+  ym = YMongo(DBS_NAME, COLLECTION_NAME)
+
   #returns JSON obj
   stock_data = ym.get_stock(symbol)
-  #now normalize the JSON obj to put into pandas dataframe
-  df = json_normalize(stock_data)
-  #now convert the "data" column to datetime and set it as the index
-  df['date'] = pd.to_datetime(df['date'])
 
-  fig = figure(x_axis_type="datetime")
-  fig.title = "Stock Closing Prices"
-  fig.grid.grid_line_alpha=0.3
-  fig.xaxis.axis_label = 'Date'
-  fig.yaxis.axis_label = 'Price'
-  fig.line(df['date'], df['values.close'], color='#A6CEE3', legend=symbol)
-  
+  return render_template("chart.html", data=stock_data)
 
-  script, div = components(fig)
 
-  return render_template("graph.html", div=div, script=script)
+
+@app.route("/graph")
+def test():
+  return render_template("graph.html")
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=5000)
+  app.run(host="0.0.0.0", port=5000, debug=True)
+
