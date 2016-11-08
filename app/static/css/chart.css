@@ -116,7 +116,7 @@
 	stroke: #51A85F;
 	stroke-width: 4px;
 
-	transition: opacity 200ms ease-out;
+	/*transition: opacity 200ms ease-out;*/
 	opacity: 0;
 }
 
