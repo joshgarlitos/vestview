@@ -37,7 +37,7 @@ $(document).ready(function() {
 			$(".info-text").css("display", "none");
 
 			//change the size of the input bar
-			$("#custom-search-input").addClass("col-md-10");
+			$("#custom-search-input").addClass("col-md-8");
 			$("#custom-search-input").addClass("col-md-offset-2");
 			return true;
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
 	}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 		return $( "<li class='ui-menu-item'></li>" )
 		.data('ui-autocomplete-item', item)
-		.append( "<div class='row'>" + "<div class='col-md-4'>" + "<div class='ticker-content'>" + item.value + "</div>" + "</div>" + "<div class='col-md-4'>" + "<div class='compName-content'>" + item.name + "</div>" + "</div>" + "<div class='col-md-4'>" + "<div class='price'>" + item.price + "</div>" + "</div>" + "</div>")
+		.append( "<div class='row item-height'><div class='dropdown item-height col-md-12'><div class='ticker-content'>" + item.value + "</div><div class='compName-content'>" + item.name + "</div><div class='price'>" + item.price + "</div></div></div>")
 		.appendTo( ul );
     };
 
