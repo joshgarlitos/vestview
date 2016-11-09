@@ -2,6 +2,14 @@
     height: 10%;
 }
 
+.navbar-default .navbar-nav>li>a {
+	color: #464748;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+	color: #51A85F;
+}
+
 .top-content {
 
 }
