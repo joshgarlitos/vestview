@@ -98,7 +98,7 @@ $(document).ready(function() {
 
 	$(".catchup-button").on("click", function(e){
 		var ticker = $('#ticker-search').val().toUpperCase();
-	    window.location.href = '/chart/' + ticker;
+	    window.location.href = '/chart/' + ticker + "?p=1";
 	});
 
 });
