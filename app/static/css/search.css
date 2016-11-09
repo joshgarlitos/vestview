@@ -52,15 +52,20 @@
     color: #464748;
 	text-align: left;
     font-size: 5rem;
-	padding: 30px;
+	left: 30px;
+	position: absolute;
+	bottom: 0;
 }
 
 .compName-content {
     font-family: 'Pier Sans';
     color: #464748;
 	text-align: center;
-    font-size: 1rem;
-
+    font-size: 3rem;
+	position: absolute;
+	left: 250px;
+	bottom: 0;
+	margin-bottom: 10px;
 }
 
 .price {
@@ -68,8 +73,10 @@
     font-weight: 300;
     color: #464748;
 	text-align: right;
-    font-size: 3rem;
-	padding: 30px;
+	position: absolute;
+	right: 30px;
+	bottom: 0;
+	margin-bottom: 10px;
 }
 
 .dropdown {
@@ -77,6 +84,9 @@
     border: none;
     border-radius: 0;
     box-shadow: none;
+	position: relative;
+	padding: 20px;
+	font-size: 3rem;	
 }
 
 .dropdown:hover {
@@ -178,4 +188,10 @@
 
 .ui-menu .ui-menu-item {
     margin-top: 10px;
+	position: relative;
+}
+
+.item-height {
+
+	height: 100px;
 }
