@@ -3,7 +3,7 @@
 ### Compiling <br/>
    Do not need to compile because the program is in Python<br/>
    <br/>
-   
+
 ### Running the Code <br/>
    Install the dependencies packages<br/>
    Activate virtual environment<br/>
@@ -23,11 +23,35 @@
 First, ensure MongoDB installed on your computer.
 https://docs.mongodb.com/manual/installation/
 
-	Ensure mongod is running
-	Then navigate to lib, open a python interpreter, and run these commands:
-		from YMongo import *
-		ym = YMongo("vestview", "stocks")
-		ym.add_djia_stocks()
+	Ensure mongod is running,
+        ```sudo mongod```
+
+    *The following script will try to add data to the vestview/stocks collection. *It will raise errors if you have data that is inconsistent with the new schema* If it does raise, then run:
+        ```python yfmongo.py --clear```
+
+	If you want to add DJIA data for a specific data range:
+        ```python yfmongo.py --start MM/DD/YYYY --end MM/DD/YYYY```
+
+    If you want to update the databases DJIA data fromt the most recent entry
+    to todays date:
+        ```python yfmongo.py --update```
+
+    The data is stored in the following way:
+     {
+            "Date": <python datetime object corresponding to day>
+            "AAPL": {
+                    "Adj_Close":float
+                    "Close":    float
+                    "High":     float
+                    "Low":      float
+                    "Open":     float
+                    "Symbol":   float
+                    "Volume":   float
+                    }
+            ....
+            ....
+            "WMT:": {.....}
+    }
 
 ### Ensure you have frontend libraries and scripts (e.g. Bootstrap, Jquery):
 	*you need to have nodejs https://nodejs.org/en/download/package-manager/

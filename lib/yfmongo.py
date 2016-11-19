@@ -226,6 +226,10 @@ class YFMongo():
         else:
             return earliest_entry[0]["Date"].date()
 
+    def _clear(self):
+        res = self.collection.delete_many({})
+        print("Delted {0} entires from the vestview/stocks collection...".format(str(res.deleted_count)))
+
     def __str__(self):
         return str(self.db_conn)
 
@@ -305,6 +309,9 @@ if __name__ == "__main__":
     argparser.add_argument("--update", action="store_true",
                             help="Update daily DJIA date until today")
 
+    argparser.add_argument("--clear", action="store_true",
+                           help="Clear the database")
+
     argparser.add_argument("-s", "--start", type=str,  nargs="?",
                             help="Start date with format"\
                             " YYYY{-/.}MM{-/.}DD or MM{-/.}DD{-/.}YYYY")
@@ -316,6 +323,8 @@ if __name__ == "__main__":
     yfm = YFMongo("vestview", "stocks")
     if args.update:
         yfm.update_djia_data()
+    elif args.clear:
+        yfm._clear()
     elif args.start and  args.end:
         start_dt = parse_date(args.start)
         end_dt = parse_date(args.end)
