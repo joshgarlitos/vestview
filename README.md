@@ -19,25 +19,28 @@
 	pip install -r /path/to/requirements.txt
 
 ### To interact and load the database:
-
 First, ensure MongoDB installed on your computer.
 https://docs.mongodb.com/manual/installation/
 
-	Ensure mongod is running,
-        ```sudo mongod```
+Ensure mongod is running:
 
-    *The following script will try to add data to the vestview/stocks collection. *It will raise errors if you have data that is inconsistent with the new schema* If it does raise, then run:
-        ```python yfmongo.py --clear```
+    `sudo mongod`
 
-	If you want to add DJIA data for a specific data range:
-        ```python yfmongo.py --start MM/DD/YYYY --end MM/DD/YYYY```
+The following script will try to add data to the vestview/stocks collection. *It will raise errors if you have data that is inconsistent with the new schema*If it does raise, then run:
 
-    If you want to update the databases DJIA data fromt the most recent entry
-    to todays date:
-        ```python yfmongo.py --update```
+    `python yfmongo.py --clear`
 
-    The data is stored in the following way:
-     {
+If you want to add DJIA data for a specific data range:
+
+    `python yfmongo.py --start MM/DD/YYYY --end MM/DD/YYYY`
+
+If you want to update the databases DJIA data from the most recent entry to todays date:
+
+    `python yfmongo.py --update`
+
+The data is stored in the following way:
+
+    ```{
             "Date": <python datetime object corresponding to day>
             "AAPL": {
                     "Adj_Close":float
@@ -51,7 +54,7 @@ https://docs.mongodb.com/manual/installation/
             ....
             ....
             "WMT:": {.....}
-    }
+       }```
 
 ### Ensure you have frontend libraries and scripts (e.g. Bootstrap, Jquery):
 	*you need to have nodejs https://nodejs.org/en/download/package-manager/
