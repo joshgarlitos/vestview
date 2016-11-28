@@ -4,7 +4,7 @@ import demjson
 import time
 import re
 import argparse
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from pymongo import MongoClient
 
 _GOOGLE_NEWS_BASE_URL = "http://www.google.com/finance/company_news?"
@@ -140,12 +140,18 @@ def get_news_data(symbol):
     # end_dt = datetime.combine(date.today(), datetime.min.time())
 
     # cursor = coll.find({"date": {"$lte":end_dt, "$gte":start_dt}}).sort("date", -1)
-
-    for c in coll.find():
+    end_dt = date.today()
+    start_dt = date.today() - timedelta(days=30)
+     # now coerce dates to datetimes so we can filter queries by dates
+    start_dt = datetime.combine(start_dt, datetime.min.time())
+    end_dt = datetime.combine(end_dt, datetime.min.time())
+    cursor = coll.find({"date":{"$lte":end_dt, "$gte":start_dt}}).sort("Date", -1)
+    articles = []
+    for c in cursor:
         if "articles" in c:
             for article in c["articles"]:
-                print(article["title"])
-
+                articles.append(article)
+    return articles
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Add historical news data to"\

@@ -4,6 +4,7 @@ import sys
 sys.path.append('../lib')
 from yfinance import *
 from yfmongo import *
+from gfnews import *
 
 MONGODB_HOST = "localHost"
 DBS_NAME = "vestview"
@@ -37,11 +38,9 @@ def graph(symbol):
 	graph.html template
 	"""
 	yfm = YFMongo(DBS_NAME, COLLECTION_NAME)
-	#returns list obj
 	daily_data = yfm.get_stock_data(symbol)
-	print("new data")
-	return render_template("chart.html", data=daily_data, symbol=symbol)
-
+	articles = get_news_data(symbol)
+	return render_template("chart.html", data=daily_data, articles=articles, symbol=symbol)
 
 
 @app.route("/graph")
