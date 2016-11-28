@@ -15,6 +15,7 @@ import nltk
 nltk.download('punkt') # sentiment analysis
 nltk.download('vader_lexicon') # sentiment analysis
 from nltk.sentiment import SentimentIntensityAnalyzer
+import datetime
 
 class listener(StreamListener):
 	""" Overriding Tweepy Listener class. Listener streaming should never end """
@@ -27,9 +28,10 @@ class listener(StreamListener):
 		""" Takes data and puts into json. Filters by company and stores
 		in collection named after the specific company """
 		
-		# Open MongoDB Connection
+		# Open MongoDB Connection & SentimentIntensityAnalyzer
 		client = MongoClient('localhost', 27017)
 		db = client['twitter']
+		sid = SentimentIntensityAnalyzer()
 
 		try:
 			tweet = json.loads(data) #tweet is a dict
@@ -37,19 +39,22 @@ class listener(StreamListener):
 				tweet_text = tweet["text"]
 				for company in keyword_list:
 					if company.lower() in tweet['text'].lower(): # Check tweet text for @company
-						collection = db[company.replace('@','')]
+						collection = db[company.replace('@','')] # get rid of @ for storing in MongoDB collection
 
 						# Prune data and perform sentiment analysis on tweet
-						sid = SentimentIntensityAnalyzer()
+						created_at = tweet['created_at']
+						dt = datetime.datetime.strptime(created_at, '%a %b %d %H:%M:%S +0000 %Y') # convert to Python datatime
 						sentiment_scores = sid.polarity_scores(tweet_text)
 
+						# Create tweet to be stored
 						tweet_to_store = {}
 						tweet_to_store['text'] = tweet['text']
-						tweet_to_store['created_at'] = tweet['created_at']
+						tweet_to_store['created_at'] = dt # store Python datetime version of created_at
 						tweet_to_store['location'] = tweet['user']['location']
 						tweet_to_store['screen_name'] = tweet['user']['screen_name']
 						tweet_to_store['sentiment_score'] = sentiment_scores['compound']
 
+						# Store the tweet
 						collection.insert(tweet_to_store)
 			return True
 		except BaseException as e:
