@@ -17,6 +17,7 @@
 /* Some overrides from previous styles */
 .container {
 	width: 1300px;
+	height: 550px;
 }
 
 .navbar {
@@ -224,6 +225,8 @@
 
 .timeline-row {
 	margin-top: 5rem;
+	height: 150px;
+
 }
 
 .control-button {
