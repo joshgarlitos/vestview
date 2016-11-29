@@ -128,6 +128,43 @@
 	opacity: 0;
 }
 
+.social-media {
+	background: none;
+    border: 2px solid black;
+    box-shadow: none;
+	position: relative;
+	height: 250px;
+}
+
+.tweets {
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	background: none;
+    border: 2px solid black;
+	height: 230px;
+}
+
+.tweetbox {
+	border: 2px solid black;
+	height: 112px;
+}
+
+.news {
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background: none;
+    border: 2px solid black;
+	height: 230px;
+}
+
+.newsbox {
+	border: 2px solid black;
+	height: 112px;
+}
+
+
 #ct-stocks path.show-path {
 	opacity: 1;
 }

@@ -92,7 +92,28 @@
 		</div>
 	</div>
 
+	<!--Begin news/tweets container-->
 
+	<div class="container">
+		<div class="row center">
+			<div class="col-md-12">
+				<div class="social-media">
+					<div class="col-md-5">
+						<div class="tweets">
+							<div class="tweetbox"></div>
+							<div class="tweetbox"></div>
+						</div>
+					</div>
+					<div class="col-md-5 col-md-offset-2">
+						<div class="news">
+							<div class="newsbox"></div>
+							<div class="newsbox"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- highstock chart <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -115,6 +136,7 @@
     <script type="text/javascript">
       var symbol = '{{symbol}}';
       var data = {{data | tojson}};
+	  var tweets = {{tweets | tojson}};
       var articles = {{articles | tojson}};
     </script>
     <!--
