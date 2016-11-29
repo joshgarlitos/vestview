@@ -8,6 +8,8 @@ from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from keys import *
 from pymongo import MongoClient
+from bson import Binary, Code
+from bson.json_util import dumps, loads
 import io
 import os
 import json
@@ -97,6 +99,9 @@ def getTweets(symbol):
 	for tweet in tweets_iterator:
 		tweet_list.append(tweet)
 
+	tweet_list = dumps(tweet_list)
+
+	#return tweet_list
 	return tweet_list
 
 
