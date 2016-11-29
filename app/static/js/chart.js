@@ -36,13 +36,46 @@ var companies = {
 }
 
 let play = true;
+let done = false;
+setPlay(play);
+
 let playbackMode = false;
 let lastTweenValue = 0;
 let stockPairs = [];
 let lastPrice = 0;
+const TIMELINE_MAX = 10000;
 
 $(function () {
     $('#company').text(companies[symbol]);
+
+    $('#timeline').on('input', function(e){
+        setPlay(false);
+        let value = e.currentTarget.value;
+        let ratio = value / TIMELINE_MAX;
+        updateChartPosition(ratio);
+        
+    });
+
+    // set dates on x-axis
+    let axis = $('.bar').toArray();
+    let dates = [];
+    let inc = Math.floor((data.length - 1) / (axis.length - 1));
+
+    // get the last item
+    setAxisMeta(axis[axis.length - 1], data[0].date);
+    // get rest of dates for axis
+    for(let i = 0; i < axis.length - 1; i ++) {
+        let length = data.length - 1;
+        let index = length - (i * inc);
+        let currentDate = data[index].date;
+        setAxisMeta(axis[i], currentDate);
+    }
+
+    function setAxisMeta(el, currentDate){
+        let formatted = moment(currentDate, 'YYYY-MM-DD').format('ddd, MMM Do');
+        $(el).find('.meta').text(formatted);
+    }
+
 
     // Create the chart
     // the JSON data object is returned with most recent date first
@@ -57,7 +90,6 @@ $(function () {
 
     let query = window.location.search.substring(1);
     let pair = query.split('=');
-    console.log(pair);
     if(pair[0] == 'p' && pair[1] == '1') {
         playbackMode = true;
     }
@@ -67,10 +99,15 @@ $(function () {
     $('#play-pause').on('click', function(){
         console.log('click');
         if(play){
-            play = false;
+            setPlay(false);
             $('#ct-stocks path').velocity('stop', true);
         } else{ 
-            play = true;
+            setPlay(true);
+            if(done) {
+                done = false;
+                lastTweenValue = 0;
+            }
+
             animateStockChart();
         }
     });
@@ -91,8 +128,6 @@ function renderStockChart(stock){
         
         data.series[0].push(stock[i][1]);
     }
-
-    console.log(data);
 
     // create graph
     var options = {
@@ -211,8 +246,7 @@ function renderStockChart(stock){
 
 function animateStockChart(){
     // animate path
-    var path = $('#ct-stocks path').get(0);
-    var pathLen = path.getTotalLength();
+    
 
     let duration = 9000;
     let durationDiff = duration * (1 - lastTweenValue);
@@ -225,47 +259,62 @@ function animateStockChart(){
         easing: 'linear',
         progress: function(elements, complete, remaining, start, tweenValue){
             if(play){
-                // save for if we stop
-                lastTweenValue = tweenValue;
-
-                // update path length
-                var adjustedLen = tweenValue * pathLen;
-
-                $('path').attr('opacity', 1);
-                path.setAttribute('stroke-dasharray', adjustedLen+' '+pathLen);
-
-                // update price number
-                let obj = getCurrentStockAndDate(lastTweenValue);
-                let price = obj.price.toFixed(2);
-                $('#price').text(price);
-
-                if(obj.nextPrice > price) {
-                    $('.status').addClass('up');
-                    $('.status').removeClass('down');
-                } else if(obj.nextPrice < price) {
-                    $('.status').addClass('down');
-                    $('.status').removeClass('up');
-                } else {
-                    $('.status').removeClass('up');
-                    $('.status').removeClass('down');
-                } 
-
-                lastPrice = price;
-
-                let date = formatDate(obj.date);
-                $('#shown-date').text(date);
+                $('#timeline').val(tweenValue * TIMELINE_MAX);
+                updateChartPosition(tweenValue);
             }
-
-
-            // adjusted length = current point
-            // pathLen = max
-
-            // current point = 0 at start, pathLen * tweenValue, 
-            // tweenValue needs to be adjusted for remaining ratio 
-            // duration needs to be shorter 
-            // 
     }
     });
+}
+
+
+function setPlay(bool) {
+    play = bool;
+
+    if(play) {
+        $('.current-control .play').css('display', 'none');
+        $('.current-control .pause').css('display', 'block');
+    } else {
+        $('.current-control .play').css('display', 'block');
+        $('.current-control .pause').css('display', 'none');
+    }
+}
+
+
+function updateChartPosition(tween){
+    var path = $('#ct-stocks path').get(0);
+    var pathLen = path.getTotalLength();
+
+    if(tween == 1) {
+        setPlay(false);
+        done = true;
+    }
+
+    var adjustedLen = tween * pathLen;
+    lastTweenValue = tween;
+
+    $('path').attr('opacity', 1);
+    path.setAttribute('stroke-dasharray', adjustedLen+' '+pathLen);
+
+    // update price number
+    let obj = getCurrentStockAndDate(lastTweenValue);
+    let price = obj.price.toFixed(2);
+    $('#price').text(price);
+
+    if(obj.nextPrice > price) {
+        $('.status').addClass('up');
+        $('.status').removeClass('down');
+    } else if(obj.nextPrice < price) {
+        $('.status').addClass('down');
+        $('.status').removeClass('up');
+    } else {
+        $('.status').removeClass('up');
+        $('.status').removeClass('down');
+    } 
+
+    lastPrice = price;
+
+    let date = formatDate(obj.date);
+    $('#shown-date').text(date);
 }
 
 // function incase we want to change later
@@ -278,7 +327,6 @@ function getCurrentStockAndDate(ratioToAdjust){
     // get the index relative to progress of graph
     //console.log(ratio);
     ratio = adjustRatio(ratioToAdjust);
-    console.log('ratio: ', ratio);
 
 
     let currentIndex = ratio * (stockPairs.length - 1);

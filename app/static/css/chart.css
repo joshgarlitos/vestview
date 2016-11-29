@@ -111,6 +111,10 @@
 	height: 160px;
 }
 
+#ct-stocks {
+	height: 304px;
+}
+
 #ct-stocks line {
 	stroke: #F5F6F6;
 	stroke-width: 4px;
@@ -173,11 +177,16 @@
 	position: relative;
 	background-color: #E0EDE2;
 	margin-left: 40px;
+	height: 300px;
 }
 
 .chart-container {
 	height: 300px;
 	margin-left: -40px;
+}
+
+.timeline-row {
+	margin-top: 5rem;
 }
 
 .control-button {
@@ -186,11 +195,129 @@
 	border-radius: 4px;
 	background-color: #fff;
 	transition: all 200ms ease-out;
-	box-shadow: 0px 3px 10px 0px rgba(72, 71, 73, 0.2);
+	box-shadow: 0px 6px 20px 0px rgba(72, 71, 73, 0.2);
+	cursor: pointer;
+
+	position: absolute;
+	left: -7rem;
+}
+
+.current-control {
+	height: 50%;
+	width: 50%;
+}
+
+.current-control .play {
+	border-top: 1.2rem solid transparent;
+	border-bottom: 1.2rem solid transparent;
+	border-left: 1.6rem solid #464748;
+	margin: 1rem 1.6rem;
+	display: none;
+}
+
+.current-control .pause {
+	margin: 1.25rem 1.35rem;
+}
+
+.current-control .pause .pause-bar {
+	border-radius: 0.1rem;
+	height: 2rem;
+	width: 0.5rem;
+	background-color: #464748;
+	position: absolute;
+	float: left;
+}
+
+.current-control .pause .pause-bar:nth-child(1) {
+	margin-left: 13px;
+}
+
+.axis {
+	width: 100%;
+	margin-top: 2rem;
+	margin-left: 40px;
+	right: 0;
+	position: absolute;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.axis .bar {
+	width: 4px;
+	height: 2.6rem;
+	background: #c6c6c5;
+	margin-top: -1rem;
+}
+
+.axis .bar .meta {
+	position: absolute;
+	font-size: 1.5rem;
+	color: #464748;
+	font-weight: 500;
+	margin-top: 3.4rem;
+	margin-left: -5rem;
+	opacity: 0.6;
+	transition: all 200ms ease-out;
+}
+
+.axis .bar .meta.active {
+	opacity: 1;
+}
+
+.axis .bar .meta.last {
+	right: 0;
+}
+
+.axis .bar .meta.first {
+	margin-left: 0;
+}
+
+
+
+
+#timeline {
+	margin-top: 2rem;
+	margin-left: 40px;
+	right: 0;
+	position: absolute;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	background: #c6c6c5;
+	height: 4px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	width: 1.8rem;
+	height: 4.5rem;
+	background-color: #fff;
+	box-shadow: 0px 6px 20px 0px rgba(72, 71, 73, 0.3);
+	-webkit-appearance: none;
+	margin-top: -2rem;
+	border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
 	cursor: pointer;
 }
 
 
-.timeline-row {
-	margin-top: 5rem;
-}
+
+
+
+
+
+
+
+
+

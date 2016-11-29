@@ -74,20 +74,43 @@
 					<div class="row chart-bg">
 						<div class="chart-container">
 							<div id='ct-stocks'></div>
-							<input id="timeline" type='range'/>
+							<div class='timeline-row'>
+								<div id='play-pause' class='control-button'>
+									<div class='current-control'>
+										<div class='pause'>
+											<div class='pause-bar'></div>
+											<div class='pause-bar'></div>
+										</div>
+										<div class='play'></div>
+									</div>
+								</div>
+								<div class='axis'>
+									<div class='bar'>
+										<div class='meta first'>Sunday, Nov 30th</div>
+									</div>
+									<div class='bar'>
+										<div class='meta'>Sun, Nov 30th</div>
+									</div>
+									<div class='bar'>
+										<div class='meta'>Mon, Nov 30th</div>
+									</div>
+									<div class='bar'>
+										<div class='meta'>Tue, Nov 30th</div>
+									</div>
+									<div class='bar'>
+										<div class='meta'>Wed, Nov 30th</div>
+									</div>
+									<div class='bar'>
+										<div class='meta'>Th, Nov 30th</div>
+									</div>
+									<div class='bar'>
+										<div class='meta last'>Fri, Nov 30th</div>
+									</div>
+								</div>
+								<input id="timeline" value='0' type='range' min='0' max='10000'/>
+							</div>
 						</div>
 					</div>
-
-					<div class="row timeline-row">
-						<div class="col-md-1">
-							<div id='play-pause' class='control-button'></div>
-						</div>
-						<div class="col-md-11">
-							
-
-						</div>
-					</div>
-
 				</div>
 			</div>
 		</div>
