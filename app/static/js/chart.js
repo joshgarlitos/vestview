@@ -76,25 +76,6 @@ $(function () {
     });
 
 
-    /* highcharts stuff 
-
-    Highcharts.stockChart('stockchart', {
-        rangeSelector: {
-            selected: 1
-        },
-
-        title: {
-            text: companies[symbol] + " \'s Stock Price"
-        },
-        series: [{
-            name: companies[symbol],
-            data: stockPairs,
-            tooltip: {
-                valueDecimals: 2
-            }
-        }],
-
-    }); */
 
 });
 
@@ -258,19 +239,16 @@ function animateStockChart(){
                 let price = obj.price.toFixed(2);
                 $('#price').text(price);
 
-                if(obj.nextPrice >= price) {
+                if(obj.nextPrice > price) {
                     $('.status').addClass('up');
                     $('.status').removeClass('down');
-                } else {
+                } else if(obj.nextPrice < price) {
                     $('.status').addClass('down');
                     $('.status').removeClass('up');
-                } 
-
-                /* re-use this when we get it accurate
-                else {
+                } else {
                     $('.status').removeClass('up');
                     $('.status').removeClass('down');
-                } */
+                } 
 
                 lastPrice = price;
 
@@ -296,9 +274,13 @@ function formatDate(time) {
 }
 
 // uses global stockPairs array
-function getCurrentStockAndDate(ratio){
+function getCurrentStockAndDate(ratioToAdjust){
     // get the index relative to progress of graph
     //console.log(ratio);
+    ratio = adjustRatio(ratioToAdjust);
+    console.log('ratio: ', ratio);
+
+
     let currentIndex = ratio * (stockPairs.length - 1);
     //console.log(currentIndex);
     let floor = stockPairs[Math.floor(currentIndex)][1];
@@ -317,5 +299,27 @@ function getCurrentStockAndDate(ratio){
 
     return {price: price, date: date, nextPrice: nextPrice};
 }
+
+function adjustRatio(ratio){
+    yMax = 1;
+    yMin = 0;
+
+    xMin = 0.0017777777777777779;
+    xMax = 1;
+
+    percent = (ratio - xMin) / (xMax - xMin);
+    output = percent * (yMax - yMin) + yMin;
+
+    return output;
+}
+
+
+
+
+
+
+
+
+
 
 
