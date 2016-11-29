@@ -20,7 +20,7 @@
          All relevant fields have a comment preceded with "!!"
     -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/highcharts.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chart.css') }}">
 </head>
 
@@ -50,7 +50,7 @@
 		</nav>
 	</div>
 
-	
+
 	<div class="container">
 		<div class="row center">
 			<div class="col-md-12">
@@ -70,14 +70,14 @@
 							<div id="shown-date">___ ____, 2016</div>
 						</div>
 					</div>
-					
+
 					<div class="row chart-bg">
 						<div class="chart-container">
 							<div id='ct-stocks'></div>
 							<input id="timeline" type='range'/>
 						</div>
 					</div>
-					
+
 					<div class="row timeline-row">
 						<div class="col-md-1">
 							<div id='play-pause' class='control-button'></div>
@@ -116,6 +116,7 @@
     <script type="text/javascript">
       var symbol = '{{symbol}}';
       var data = {{data | tojson}};
+      var articles = {{articles | tojson}};
     </script>
     <!--
     <script src={{ url_for('static', filename='./bower_components/d3/d3.min.js') }}></script>
