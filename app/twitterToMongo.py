@@ -69,6 +69,36 @@ class listener(StreamListener):
 	def on_disconnect(self, notice):
 		print('bye')
 
+def getTweets(symbol):
+	""" Grabs all tweets stored in MongoDB for company.
+	Pass in company stock ticker symbol and return all tweets for that company"""
+
+	# Convert ticker symbol to company collection name in MongoDB
+	ticker_Dict = { "MMM" : "3MInteractive", "AXP" : "AmericanExpress" , 
+					"AAPL" : "Apple", "BA" : "Boeing" , "CAT" : "CaterpillarInc", "CVX" : "Chevron", 
+					"CSCO" : "Cisco", "KO" : "CocaCola", "DIS" : "Disney",
+					"DD" : "Dupont_News", "XOM" : "ExxonMobil", "GE" : "GeneralElectric", 
+					"GS" : "GoldmanSachs", "HD" : "HomeDepot", "IBM" : "IBM", 
+					"INTC" : "Intel", "JNJ" : "JNJCares", "JPM" : "JPMorgan",
+					"MCD" : "McDonalds", "MRK" : "Merck", "MSFT" : "Microsoft", 
+					"NKE" : "Nike", "PFE" : "Pfizer", "PG" : "ProcterGamble", 
+					"TRV" : "Travelers", "UTX" : "UTC", "UNH" : "myUHC",
+					"VZ" : "Verizon", "V" : "Visa", "WMT" : "Walmart"}
+
+	client = MongoClient('localhost', 27017)
+	db = client['twitter']
+	twitter_handle = ticker_Dict.get(symbol, None)
+	collection = db[twitter_handle]
+
+	tweets_iterator = collection.find() # gets all tweets in company collection
+	tweet_list = []
+
+	""" Creates a list containing a dict for each tweet """ 
+	for tweet in tweets_iterator:
+		tweet_list.append(tweet)
+
+	return tweet_list
+
 
 """
 Running of stream listener:

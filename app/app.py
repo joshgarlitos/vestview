@@ -5,6 +5,7 @@ sys.path.append('../lib')
 from yfinance import *
 from yfmongo import *
 from gfnews import *
+from twitterToMongo import *
 
 MONGODB_HOST = "localHost"
 DBS_NAME = "vestview"
@@ -40,6 +41,8 @@ def graph(symbol):
 	yfm = YFMongo(DBS_NAME, COLLECTION_NAME)
 	daily_data = yfm.get_stock_data(symbol)
 	articles = get_news_data(symbol)
+	tweet_list = twitterToMongo.getTweets(symbol) # Returns list containing dicts of each tweet
+	
 	return render_template("chart.html", data=daily_data, articles=articles, symbol=symbol)
 
 
