@@ -35,17 +35,24 @@ var companies = {
     "DIS": "Walt Disney"
 }
 
+let slideDirection = 'forwards';
+
 let play = true;
 let done = false;
 setPlay(play);
 
+let lastArticleDate = 0;
+let lastTweetDate = 0;
+
 let playbackMode = false;
 let lastTweenValue = 0;
 let stockPairs = [];
-let lastPrice = 0;
+let articleLookup = {};
 const TIMELINE_MAX = 10000;
 
 $(function () {
+    console.log(articles);
+    console.log(tweets);
     $('#company').text(companies[symbol]);
 
     $('#timeline').on('input', function(e){
@@ -53,7 +60,8 @@ $(function () {
         let value = e.currentTarget.value;
         let ratio = value / TIMELINE_MAX;
         updateChartPosition(ratio);
-        
+
+        updateSliderDirection(value);
     });
 
     // set dates on x-axis
@@ -101,6 +109,7 @@ $(function () {
         if(play){
             setPlay(false);
             $('#ct-stocks path').velocity('stop', true);
+            lastDate = 0;
         } else{ 
             setPlay(true);
             if(done) {
@@ -113,8 +122,45 @@ $(function () {
     });
 
 
+    // create articles array to display later
+    let tempDate = 0;
+    for(let i = 0; i < articles.length; i++){
+        // get current date
+        let currentDate = articles[i].date;
+        if(currentDate != tempDate){
+            tempDate = currentDate;
+
+            articleLookup[formatDate(currentDate)] = {
+                'article': articles[i],
+                'shown': false
+            };
+        }
+    }
+
 
 });
+
+let lastSlide = -1;
+let lastDirection = 'none';
+function updateSliderDirection(slide){
+    console.log(slide);
+    if(slide < lastSlide){
+        slideDirection = 'backwards';
+        lastSlide = slide;
+    } else if (slide > lastSlide) {
+        slideDirection = 'forwards';
+        lastSlide = slide;
+    } else {
+        console.log('slide values equal');
+    }
+
+    console.log(slideDirection);
+
+    if(lastDirection != slideDirection){
+        lastDirection = slideDirection;
+        lastDate = 0;
+    }
+}
 
 
 function renderStockChart(stock){
@@ -125,7 +171,6 @@ function renderStockChart(stock){
     };
 
     for(let i = 0; i < stock.length; i++) {
-        
         data.series[0].push(stock[i][1]);
     }
 
@@ -271,6 +316,7 @@ function setPlay(bool) {
     play = bool;
 
     if(play) {
+        slideDirection = 'forwards';
         $('.current-control .play').css('display', 'none');
         $('.current-control .pause').css('display', 'block');
     } else {
@@ -295,8 +341,15 @@ function updateChartPosition(tween){
     $('path').attr('opacity', 1);
     path.setAttribute('stroke-dasharray', adjustedLen+' '+pathLen);
 
+    updatePage(tween);
+}
+
+
+let lastDate = 0;
+let lastUpdateSlider = -1;
+function updatePage(tween){
     // update price number
-    let obj = getCurrentStockAndDate(lastTweenValue);
+    let obj = getCurrentStockAndDate(tween);
     let price = obj.price.toFixed(2);
     $('#price').text(price);
 
@@ -309,12 +362,41 @@ function updateChartPosition(tween){
     } else {
         $('.status').removeClass('up');
         $('.status').removeClass('down');
-    } 
+    }
 
-    lastPrice = price;
-
+    // update date
     let date = formatDate(obj.date);
     $('#shown-date').text(date);
+
+    // commented out for now, will work on
+    // later for scrubbing ability
+    //
+    /* if(articleLookup[date].shown && slideDirection == 'backwards'){
+        // moving backward
+        articleLookup[date].shown = false;
+
+        // check to see if this is actually removing
+        $('#news').find('[id="'+ date + '"]').remove();
+    } else */
+
+    if (!articleLookup[date].shown && slideDirection == 'forwards'){
+        // moving forward
+        articleLookup[date].shown = true;
+
+        let article = articleLookup[date].article;
+        let el = generateArticleElement(article);
+        //$('#news').prepend(el);
+    }
+}
+
+function generateArticleElement(article){
+    let div = '';
+
+    div += "<div class='newsbox' id='" + date + "'>";
+    div += article.date + '   ' + article.title;
+    div += "</div>";
+
+    return div;
 }
 
 // function incase we want to change later
