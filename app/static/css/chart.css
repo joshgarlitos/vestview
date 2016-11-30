@@ -145,8 +145,58 @@
 }
 
 .tweetbox {
+	margin-bottom: 2rem;
 	background: #fff;
-	height: 112px;
+	border-radius: 0.5rem;
+	height: 100px;
+	transition: all 300ms ease-out;
+	box-shadow: 0px 6px 20px 0px rgba(72, 71, 73, 0.2);
+}
+
+.tweetbox:hover {
+	cursor: pointer;
+	box-shadow: 0px 10px 40px 0px rgba(72, 71, 73, 0.27);
+}
+
+.tweetbox .info {
+	float: left;
+	width: 70%;
+	margin-top: 1.5rem;
+}
+
+.tweetbox .heading {
+	font-size: 1.6rem;
+	font-weight: 600;
+}
+
+.tweetbox .heading span {
+	opacity: 0.5;
+	font-weight: 400;
+}
+
+.tweetbox .text {
+	margin-top: 1rem;
+	font-size: 1.4rem;
+}
+
+.tweetbox .sentiment {
+	float: left;
+	border: none;
+	width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 0.3rem;
+	background: #c6c6c5;
+	margin-top: 2rem;
+	margin-left: 1.7rem;
+	margin-right: 1.7rem;
+}
+
+.tweetbox .sentiment.positive {
+	background-color: #51a85f;
+}
+
+.tweetbox .sentiment.negative {
+	background-color: #e75656;
 }
 
 .news {

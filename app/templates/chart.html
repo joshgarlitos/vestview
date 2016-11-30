@@ -123,9 +123,6 @@
 			<div class="col-md-12">
 				<div class="social-media row">
 					<div id="tweets" class="tweets col-md-5">
-						<div class="tweetbox"></div>
-						<div class="tweetbox"></div>
-					</div>
 					<div id="news" class="news col-md-5 col-md-offset-2">
 					</div>
 				</div>
@@ -154,7 +151,7 @@
     <script type="text/javascript">
       var symbol = '{{symbol}}';
       var data = {{data | tojson}};
-	  var tweets = {{tweets | tojson}};
+	  var tweets = {{tweets | safe}};
       var articles = {{articles | tojson}};
     </script>
     <!--

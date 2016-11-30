@@ -48,9 +48,12 @@ let playbackMode = false;
 let lastTweenValue = 0;
 let stockPairs = [];
 let articleLookup = {};
+let tweetsLookup = {};
 const TIMELINE_MAX = 10000;
 
 $(function () {
+    console.log(tweets);
+
     // create articles array to display later
     let tempDate = 0;
     for(let i = 0; i < articles.length; i++){
@@ -65,9 +68,26 @@ $(function () {
                 'image': ''
             };
 
-            findAndSaveImage(formatDate(currentDate), articles[i].url);
+            //findAndSaveImage(formatDate(currentDate), articles[i].url);
         }
     }
+
+    tempDate = 0;
+    for(let i = 0; i < tweets.length; i++){
+        let currentDate = formatUnixDate(tweets[i].created_at['$date']);
+        if(currentDate != tempDate){
+            tempDate = currentDate;
+
+            //let dateToStore = currentDate;
+            let dateToStore = formatUnixDate('1480029678');
+            tweetsLookup[dateToStore] = {
+                'tweet': tweets[i],
+                'shown': false
+            }
+        }
+    }
+
+    console.log(tweetsLookup);
 
     $('#company').text(companies[symbol]);
 
@@ -383,7 +403,8 @@ function updatePage(tween){
         $('#news').find('[id="'+ date + '"]').remove();
     } else */
 
-    if (!articleLookup[date].shown && slideDirection == 'forwards'){
+    // show articles
+    if (articleLookup[date] && !articleLookup[date].shown && slideDirection == 'forwards'){
         // moving forward
         articleLookup[date].shown = true;
         console.log('news image: ', articleLookup[date].image);
@@ -397,12 +418,27 @@ function updatePage(tween){
             win.focus();
         });
     }
+
+    console.log(tweetsLookup[date]);
+    if (tweetsLookup[date] && !tweetsLookup[date].shown && slideDirection == 'forwards'){
+        //moving forward
+        tweetsLookup[date].shown = true;
+        let el = generateTweetElement(date);
+        console.log(el);
+
+        $('#tweets').prepend(el);
+        $('.tweetbox').click(function(e){
+            let url = 'http://twitter.com/' + $(e.currentTarget).attr('data-screen-name');
+            let win = window.open(url, '_blank');
+            win.focus();
+        });
+    }
 }
 
 function generateArticleElement(date){
     let article = articleLookup[date].article;
     let div = '';
-    
+
     let image = articleLookup[date].image;
     //let image = "https://g.foolcdn.com/image/?url=http%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F413807%2Fiphone-7-manufacturing-2.png&h=630&w=1200&op=resize";
     div += "<div class='newsbox' id='" + date + "' data-url='" + article.url + "'>";
@@ -416,9 +452,37 @@ function generateArticleElement(date){
     return div;
 }
 
+function generateTweetElement(date){
+    let tweet = tweetsLookup[date].tweet;
+    let div = '';
+
+    let sentiment = '';
+    if(tweet.sentiment_score > 0){
+        sentiment = ' positive';
+    } else if(tweet.sentiment_score < 0) {
+        sentiment = ' negative';
+    }
+
+    div += "<div class='tweetbox' id='" + date + "' data-screen-name='" + tweet.screen_name + "'>";
+    div += "<div class='sentiment" + sentiment + "'></div>";
+    div += "<div class='info'>";
+    div += "<div class='heading'>" + tweet.screen_name + '<span> ' + moment(tweet.created_at['$date']).format('MMM. Do, H:mm');
+    div += "</div>";
+    div += "<div class='text'>" + tweet.text + "</div>";
+    div += "</div>";
+    div += "</div>";
+
+    return div;
+}
+
 // function incase we want to change later
 function formatDate(time) {
     return moment(time).format('MMM Do, YYYY');
+}
+
+function formatUnixDate(time) {
+    console.log(time);
+    return moment.unix(time).format('MMM Do, YYYY');
 }
 
 // uses global stockPairs array
