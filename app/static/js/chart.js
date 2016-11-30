@@ -51,8 +51,24 @@ let articleLookup = {};
 const TIMELINE_MAX = 10000;
 
 $(function () {
-    console.log(articles);
-    console.log(tweets);
+    // create articles array to display later
+    let tempDate = 0;
+    for(let i = 0; i < articles.length; i++){
+        // get current date
+        let currentDate = articles[i].date;
+        if(currentDate != tempDate){
+            tempDate = currentDate;
+
+            articleLookup[formatDate(currentDate)] = {
+                'article': articles[i],
+                'shown': false,
+                'image': ''
+            };
+
+            findAndSaveImage(formatDate(currentDate), articles[i].url);
+        }
+    }
+
     $('#company').text(companies[symbol]);
 
     $('#timeline').on('input', function(e){
@@ -105,7 +121,6 @@ $(function () {
     renderStockChart(stockPairs);
 
     $('#play-pause').on('click', function(){
-        console.log('click');
         if(play){
             setPlay(false);
             $('#ct-stocks path').velocity('stop', true);
@@ -120,30 +135,21 @@ $(function () {
             animateStockChart();
         }
     });
-
-
-    // create articles array to display later
-    let tempDate = 0;
-    for(let i = 0; i < articles.length; i++){
-        // get current date
-        let currentDate = articles[i].date;
-        if(currentDate != tempDate){
-            tempDate = currentDate;
-
-            articleLookup[formatDate(currentDate)] = {
-                'article': articles[i],
-                'shown': false
-            };
-        }
-    }
-
-
+    
 });
+
+function findAndSaveImage(lookupDate, url){
+    $.ajax('http://opengraph.io/api/1.0/site/' + url)
+     .done(function(data){
+        console.log(data);
+        console.log(data.hybridGraph.image);
+        articleLookup[lookupDate].image = data.hybridGraph.image;
+    });
+}
 
 let lastSlide = -1;
 let lastDirection = 'none';
 function updateSliderDirection(slide){
-    console.log(slide);
     if(slide < lastSlide){
         slideDirection = 'backwards';
         lastSlide = slide;
@@ -153,8 +159,6 @@ function updateSliderDirection(slide){
     } else {
         console.log('slide values equal');
     }
-
-    console.log(slideDirection);
 
     if(lastDirection != slideDirection){
         lastDirection = slideDirection;
@@ -227,7 +231,7 @@ function renderStockChart(stock){
                 }
                 $('#ct-stocks path').css('opacity', '1');
             }, 100);
-        }, 200);
+        }, 400);
 
         /*
         // create tooltips for each point
@@ -382,18 +386,31 @@ function updatePage(tween){
     if (!articleLookup[date].shown && slideDirection == 'forwards'){
         // moving forward
         articleLookup[date].shown = true;
+        console.log('news image: ', articleLookup[date].image);
+        let el = generateArticleElement(date);
 
-        let article = articleLookup[date].article;
-        let el = generateArticleElement(article);
-        //$('#news').prepend(el);
+        $('#news').prepend(el);
+
+        $('.newsbox').click(function(e){
+            let url = $(e.currentTarget).attr('data-url');
+            let win = window.open(url, '_blank');
+            win.focus();
+        });
     }
 }
 
-function generateArticleElement(article){
+function generateArticleElement(date){
+    let article = articleLookup[date].article;
     let div = '';
-
-    div += "<div class='newsbox' id='" + date + "'>";
-    div += article.date + '   ' + article.title;
+    
+    let image = articleLookup[date].image;
+    //let image = "https://g.foolcdn.com/image/?url=http%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F413807%2Fiphone-7-manufacturing-2.png&h=630&w=1200&op=resize";
+    div += "<div class='newsbox' id='" + date + "' data-url='" + article.url + "'>";
+    div += "<div class='image' style='background-image: url(\"" + image + "\")'></div>";
+    div += "<div class='info'>";
+    div += "<div class='title'>" + article.title + "</div>";
+    div += "<div class='description'>" + article.source + ' - <span>' + moment(date, 'MMM Do, YYYY').format('dddd MMM. Do, YYYY') + "</span></div>";
+    div += "<div class='blurb'>" + article.openingSentence + "</div>";
     div += "</div>";
 
     return div;
