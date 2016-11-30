@@ -13,8 +13,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="{{ url_for('static', filename='./bower_components/chartist/dist/chartist.min.css') }}">
-
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <!-- This is the CSS file for the chart *ONLY*
          All relevant fields have a comment preceded with "!!"
@@ -122,12 +122,15 @@
 		<div class="row center">
 			<div class="col-md-12">
 				<div class="social-media row">
+					<div class="onTwitter col-md-5"><i class="fa fa-twitter"></i>  On Twitter</div>
+					<div class="inthenews col-md-5 col-md-offset-2"><i class="fa fa-newspaper-o" aria-hidden="true"></i>  In the News</div>
+				</div>
+				<div class="social-media row">
 					<div id="tweets" class="tweets col-md-5">
 						<div class="tweetbox"></div>
 						<div class="tweetbox"></div>
 					</div>
-					<div id="news" class="news col-md-5 col-md-offset-2">
-					</div>
+					<div id="news" class="news col-md-5 col-md-offset-2"></div>
 				</div>
 			</div>
 		</div>

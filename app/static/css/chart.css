@@ -389,7 +389,19 @@ input[type=range]::-webkit-slider-thumb:hover {
 	cursor: pointer;
 }
 
+.inthenews {
+	height: 50px;
+	font-family: 'Pier Sans';
+	font-size: 3rem;
+	text-align: center;
+}
 
+.onTwitter {
+	height: 25px; 
+	font-family: 'Pier Sans';
+    font-size: 3rem;
+	text-align: center;
+}
 
 
 
