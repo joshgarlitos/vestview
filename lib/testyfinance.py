@@ -6,14 +6,12 @@ import unittest
 class TestYFinance(unittest.TestCase):
     
     def test_json(self):
-        yf = YFinance()
-        resp = yf.get_quote(["GOOG"])
+        resp = get_quote(["GOOG"])
         
         self.assertTrue(isinstance(resp, dict))
        
     def test_keys(self):
-        yf = YFinance()
-        resp = yf.get_quote(["GOOG"])
+        resp = get_quote(["GOOG"])
         resp_keys = list(resp.keys())
         
         expected_keys = ['Name',

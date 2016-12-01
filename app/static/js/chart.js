@@ -35,17 +35,59 @@ var companies = {
     "DIS": "Walt Disney"
 }
 
+const DURATION = 9000;
+
+let slideDirection = 'forwards';
+
 let play = true;
 let done = false;
 setPlay(play);
 
+let lastArticleDate = 0;
+let lastTweetDate = 0;
+
 let playbackMode = false;
 let lastTweenValue = 0;
 let stockPairs = [];
-let lastPrice = 0;
+let articleLookup = {};
+let tweetsLookup = {};
 const TIMELINE_MAX = 10000;
 
 $(function () {
+
+    // create articles array to display later
+    let tempDate = 0;
+    for(let i = 0; i < articles.length; i++){
+        // get current date
+        let currentDate = articles[i].date;
+        if(currentDate != tempDate){
+            tempDate = currentDate;
+
+            articleLookup[formatDate(currentDate)] = {
+                'article': articles[i],
+                'shown': false,
+                'image': ''
+            };
+
+            findAndSaveImage(formatDate(currentDate), articles[i].url);
+        }
+    }
+
+    tempDate = 0;
+    for(let i = 0; i < tweets.length; i++){
+        let currentDate = formatUnixDate(tweets[i].created_at['$date']);
+        if(currentDate != tempDate){
+            tempDate = currentDate;
+
+            let dateToStore = currentDate;
+            //let dateToStore = formatUnixDate('1480029678');
+            tweetsLookup[dateToStore] = {
+                'tweet': tweets[i],
+                'shown': false
+            }
+        }
+    }
+
     $('#company').text(companies[symbol]);
 
     $('#timeline').on('input', function(e){
@@ -53,7 +95,8 @@ $(function () {
         let value = e.currentTarget.value;
         let ratio = value / TIMELINE_MAX;
         updateChartPosition(ratio);
-        
+
+        updateSliderDirection(value);
     });
 
     // set dates on x-axis
@@ -97,10 +140,10 @@ $(function () {
     renderStockChart(stockPairs);
 
     $('#play-pause').on('click', function(){
-        console.log('click');
         if(play){
             setPlay(false);
             $('#ct-stocks path').velocity('stop', true);
+            lastDate = 0;
         } else{ 
             setPlay(true);
             if(done) {
@@ -111,10 +154,32 @@ $(function () {
             animateStockChart();
         }
     });
-
-
-
+    
 });
+
+function findAndSaveImage(lookupDate, url){
+    $.ajax('http://opengraph.io/api/1.0/site/' + url)
+     .done(function(data){
+        articleLookup[lookupDate].image = data.hybridGraph.image;
+    });
+}
+
+let lastSlide = -1;
+let lastDirection = 'none';
+function updateSliderDirection(slide){
+    if(slide < lastSlide){
+        slideDirection = 'backwards';
+        lastSlide = slide;
+    } else if (slide > lastSlide) {
+        slideDirection = 'forwards';
+        lastSlide = slide;
+    }
+
+    if(lastDirection != slideDirection){
+        lastDirection = slideDirection;
+        lastDate = 0;
+    }
+}
 
 
 function renderStockChart(stock){
@@ -125,7 +190,6 @@ function renderStockChart(stock){
     };
 
     for(let i = 0; i < stock.length; i++) {
-        
         data.series[0].push(stock[i][1]);
     }
 
@@ -182,7 +246,7 @@ function renderStockChart(stock){
                 }
                 $('#ct-stocks path').css('opacity', '1');
             }, 100);
-        }, 200);
+        }, 400);
 
         /*
         // create tooltips for each point
@@ -248,7 +312,7 @@ function animateStockChart(){
     // animate path
     
 
-    let duration = 9000;
+    let duration = DURATION;
     let durationDiff = duration * (1 - lastTweenValue);
     // could try easing: 'easeInOut'
 
@@ -271,6 +335,7 @@ function setPlay(bool) {
     play = bool;
 
     if(play) {
+        slideDirection = 'forwards';
         $('.current-control .play').css('display', 'none');
         $('.current-control .pause').css('display', 'block');
     } else {
@@ -295,8 +360,15 @@ function updateChartPosition(tween){
     $('path').attr('opacity', 1);
     path.setAttribute('stroke-dasharray', adjustedLen+' '+pathLen);
 
+    updatePage(tween);
+}
+
+
+let lastDate = 0;
+let lastUpdateSlider = -1;
+function updatePage(tween){
     // update price number
-    let obj = getCurrentStockAndDate(lastTweenValue);
+    let obj = getCurrentStockAndDate(tween);
     let price = obj.price.toFixed(2);
     $('#price').text(price);
 
@@ -306,20 +378,99 @@ function updateChartPosition(tween){
     } else if(obj.nextPrice < price) {
         $('.status').addClass('down');
         $('.status').removeClass('up');
-    } else {
-        $('.status').removeClass('up');
-        $('.status').removeClass('down');
-    } 
+    }
 
-    lastPrice = price;
-
+    // update date
     let date = formatDate(obj.date);
     $('#shown-date').text(date);
+
+    // commented out for now, will work on
+    // later for scrubbing ability
+    //
+    /* if(articleLookup[date].shown && slideDirection == 'backwards'){
+        // moving backward
+        articleLookup[date].shown = false;
+
+        // check to see if this is actually removing
+        $('#news').find('[id="'+ date + '"]').remove();
+    } else */
+
+    // show articles
+    if (articleLookup[date] && !articleLookup[date].shown && slideDirection == 'forwards'){
+        // moving forward
+        articleLookup[date].shown = true;
+        let el = generateArticleElement(date);
+
+        $('#news').prepend(el);
+
+        $('.newsbox').click(function(e){
+            let url = $(e.currentTarget).attr('data-url');
+            let win = window.open(url, '_blank');
+            win.focus();
+        });
+    }
+
+    if (tweetsLookup[date] && !tweetsLookup[date].shown && slideDirection == 'forwards'){
+        //moving forward
+        tweetsLookup[date].shown = true;
+        let el = generateTweetElement(date);
+
+        $('#tweets').prepend(el);
+        $('.tweetbox').click(function(e){
+            let url = 'http://twitter.com/' + $(e.currentTarget).attr('data-screen-name');
+            let win = window.open(url, '_blank');
+            win.focus();
+        });
+    }
+}
+
+function generateArticleElement(date){
+    let article = articleLookup[date].article;
+    let div = '';
+
+    let image = articleLookup[date].image;
+    //let image = "https://g.foolcdn.com/image/?url=http%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F413807%2Fiphone-7-manufacturing-2.png&h=630&w=1200&op=resize";
+    div += "<div class='newsbox' id='" + date + "' data-url='" + article.url + "'>";
+    div += "<div class='image' style='background-image: url(\"" + image + "\")'></div>";
+    div += "<div class='info'>";
+    div += "<div class='title'>" + article.title + "</div>";
+    div += "<div class='description'>" + article.source + ' - <span>' + moment(date, 'MMM Do, YYYY').format('dddd MMM. Do, YYYY') + "</span></div>";
+    div += "<div class='blurb'>" + article.openingSentence + "</div>";
+    div += "</div>";
+
+    return div;
+}
+
+function generateTweetElement(date){
+    let tweet = tweetsLookup[date].tweet;
+    let div = '';
+
+    let sentiment = '';
+    if(tweet.sentiment_score > 0){
+        sentiment = ' positive';
+    } else if(tweet.sentiment_score < 0) {
+        sentiment = ' negative';
+    }
+
+    div += "<div class='tweetbox' id='" + date + "' data-screen-name='" + tweet.screen_name + "'>";
+    div += "<div class='sentiment" + sentiment + "'></div>";
+    div += "<div class='info'>";
+    div += "<div class='heading'>" + tweet.screen_name + '<span>      ' + moment(tweet.created_at['$date']).format('MMM. Do, H:mm');
+    div += "</div>";
+    div += "<div class='text'>" + tweet.text + "</div>";
+    div += "</div>";
+    div += "</div>";
+
+    return div;
 }
 
 // function incase we want to change later
 function formatDate(time) {
     return moment(time).format('MMM Do, YYYY');
+}
+
+function formatUnixDate(time) {
+    return moment.unix(time).format('MMM Do, YYYY');
 }
 
 // uses global stockPairs array
@@ -330,6 +481,7 @@ function getCurrentStockAndDate(ratioToAdjust){
 
 
     let currentIndex = ratio * (stockPairs.length - 1);
+
     //console.log(currentIndex);
     let floor = stockPairs[Math.floor(currentIndex)][1];
     //console.log(floor);
