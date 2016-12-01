@@ -137,7 +137,11 @@ db.createCollection( "Visa", { capped: true, size: 300000000 } )
 db.createCollection( "Walmart", { capped: true, size: 300000000 } )
 ```
 
-### INSERT FAKE TWEET STEPS
+### Insert some tweets into Apple Collections
+Make sure you are in the `lib` directory and run the following:
+```python
+python3 insertTweets.py
+```
 
 ### Ensure you have frontend libraries and scripts (e.g. Bootstrap, Jquery):
 	*you need to have nodejs https://nodejs.org/en/download/package-manager/
