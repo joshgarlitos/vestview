@@ -1,15 +1,5 @@
 #VestView README
 
-### A brief functionality description.
-	Vestview is a web application that allows users to view financial data within the context of current events and social media.  Users can explore some of the top companies in the world and gain greater insights about how our connected world plays out in these different domains.
-
-### A brief tutorial about how to use your software.
-	* Enter a stock ticker of a DIJA company. EX: Apple would be AAPL or Microsoft is MSFT
-	* Choose whether you would like to catch up on the past month of stock trends or from this current day
-	* Watch as the news articles and tweets progressively show up (Catch up on this month)
-	* If you like an article or tweet, click on it and check it out! The green and red picture on the tweets is sentiment analysis
-	
-
 ### Compiling <br/>
    Do not need to compile because the program is in Python<br/>
    <br/>
