@@ -105,3 +105,5 @@ For example, in the news.APPL collection, the document corresponding to 11/25/20
 	Navigate to app
 	Run "python app.py"
 	Then, in your web browser, navigate to "localhost:5000"
+
+
