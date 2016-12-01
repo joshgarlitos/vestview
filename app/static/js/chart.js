@@ -79,8 +79,8 @@ $(function () {
         if(currentDate != tempDate){
             tempDate = currentDate;
 
-            //let dateToStore = currentDate;
-            let dateToStore = formatUnixDate('1480029678');
+            let dateToStore = currentDate;
+            //let dateToStore = formatUnixDate('1480029678');
             tweetsLookup[dateToStore] = {
                 'tweet': tweets[i],
                 'shown': false
