@@ -35,6 +35,8 @@ var companies = {
     "DIS": "Walt Disney"
 }
 
+const DURATION = 9000;
+
 let slideDirection = 'forwards';
 
 let play = true;
@@ -52,7 +54,6 @@ let tweetsLookup = {};
 const TIMELINE_MAX = 10000;
 
 $(function () {
-    console.log(tweets);
 
     // create articles array to display later
     let tempDate = 0;
@@ -68,7 +69,7 @@ $(function () {
                 'image': ''
             };
 
-            //findAndSaveImage(formatDate(currentDate), articles[i].url);
+            findAndSaveImage(formatDate(currentDate), articles[i].url);
         }
     }
 
@@ -86,8 +87,6 @@ $(function () {
             }
         }
     }
-
-    console.log(tweetsLookup);
 
     $('#company').text(companies[symbol]);
 
@@ -161,8 +160,6 @@ $(function () {
 function findAndSaveImage(lookupDate, url){
     $.ajax('http://opengraph.io/api/1.0/site/' + url)
      .done(function(data){
-        console.log(data);
-        console.log(data.hybridGraph.image);
         articleLookup[lookupDate].image = data.hybridGraph.image;
     });
 }
@@ -176,8 +173,6 @@ function updateSliderDirection(slide){
     } else if (slide > lastSlide) {
         slideDirection = 'forwards';
         lastSlide = slide;
-    } else {
-        console.log('slide values equal');
     }
 
     if(lastDirection != slideDirection){
@@ -317,7 +312,7 @@ function animateStockChart(){
     // animate path
     
 
-    let duration = 9000;
+    let duration = DURATION;
     let durationDiff = duration * (1 - lastTweenValue);
     // could try easing: 'easeInOut'
 
@@ -383,9 +378,6 @@ function updatePage(tween){
     } else if(obj.nextPrice < price) {
         $('.status').addClass('down');
         $('.status').removeClass('up');
-    } else {
-        $('.status').removeClass('up');
-        $('.status').removeClass('down');
     }
 
     // update date
@@ -407,7 +399,6 @@ function updatePage(tween){
     if (articleLookup[date] && !articleLookup[date].shown && slideDirection == 'forwards'){
         // moving forward
         articleLookup[date].shown = true;
-        console.log('news image: ', articleLookup[date].image);
         let el = generateArticleElement(date);
 
         $('#news').prepend(el);
@@ -419,12 +410,10 @@ function updatePage(tween){
         });
     }
 
-    console.log(tweetsLookup[date]);
     if (tweetsLookup[date] && !tweetsLookup[date].shown && slideDirection == 'forwards'){
         //moving forward
         tweetsLookup[date].shown = true;
         let el = generateTweetElement(date);
-        console.log(el);
 
         $('#tweets').prepend(el);
         $('.tweetbox').click(function(e){
@@ -466,7 +455,7 @@ function generateTweetElement(date){
     div += "<div class='tweetbox' id='" + date + "' data-screen-name='" + tweet.screen_name + "'>";
     div += "<div class='sentiment" + sentiment + "'></div>";
     div += "<div class='info'>";
-    div += "<div class='heading'>" + tweet.screen_name + '<span> ' + moment(tweet.created_at['$date']).format('MMM. Do, H:mm');
+    div += "<div class='heading'>" + tweet.screen_name + '<span>      ' + moment(tweet.created_at['$date']).format('MMM. Do, H:mm');
     div += "</div>";
     div += "<div class='text'>" + tweet.text + "</div>";
     div += "</div>";
@@ -481,7 +470,6 @@ function formatDate(time) {
 }
 
 function formatUnixDate(time) {
-    console.log(time);
     return moment.unix(time).format('MMM Do, YYYY');
 }
 
@@ -493,6 +481,7 @@ function getCurrentStockAndDate(ratioToAdjust){
 
 
     let currentIndex = ratio * (stockPairs.length - 1);
+
     //console.log(currentIndex);
     let floor = stockPairs[Math.floor(currentIndex)][1];
     //console.log(floor);
