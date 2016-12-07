@@ -74,9 +74,11 @@ $(function () {
     }
 
     tempDate = 0;
+    console.log(tweets);
     for(let i = 0; i < tweets.length; i++){
-        let currentDate = formatUnixDate(tweets[i].created_at['$date']);
-        if(currentDate != tempDate){
+        //let currentDate = formatUnixDate(tweets[i].created_at['$date']);
+        let currentDate = formatUnixDate(tweets[i]['created_at']);
+        if(currentDate && currentDate != tempDate){
             tempDate = currentDate;
 
             let dateToStore = currentDate;
@@ -455,7 +457,7 @@ function generateTweetElement(date){
     div += "<div class='tweetbox' id='" + date + "' data-screen-name='" + tweet.screen_name + "'>";
     div += "<div class='sentiment" + sentiment + "'></div>";
     div += "<div class='info'>";
-    div += "<div class='heading'>" + tweet.screen_name + '<span>      ' + moment(tweet.created_at['$date']).format('MMM. Do, H:mm');
+    div += "<div class='heading'>" + tweet.screen_name + '<span>      ' + moment.unix(tweet['created_at']).format('MMM. Do, H:mm');
     div += "</div>";
     div += "<div class='text'>" + tweet.text + "</div>";
     div += "</div>";
